@@ -13,6 +13,9 @@ Version: 1.0.0
 License: MIT
 Copyright: © 2024 FAN WANG. All rights reserved.
 ---
+$$
+\require{tipa}
+$$
 # International Phonetic Alphabet (IPA)
 $$
 \textipa{[i]} \textipa{[1]} \textipa{[y]} \textipa{[M]} \textipa{[u]} \textipa{[I]} \textipa{[Y]} \textipa{[U]}
