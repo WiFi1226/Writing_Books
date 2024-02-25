@@ -13,30 +13,7 @@ Version: 1.0.0
 License: MIT
 Copyright: © 2024 FAN WANG. All rights reserved.
 ---
-$$
-\require{tipa}
-$$
 # International Phonetic Alphabet (IPA)
-$$
-\textipa{[i]} \textipa{[1]} \textipa{[y]} \textipa{[M]} \textipa{[u]} \textipa{[I]} \textipa{[Y]} \textipa{[U]}
-$$
-$$
-\textipa{[e]} \textipa{[9]} \textipa{[E]} \textipa{[3]} \textipa{[2]} \textipa{[7]} \textipa{[oe]} \textipa{[E]} \textipa{[3]}
-$$
-$$
-\textipa{[G]} \textipa{[A]} \textipa{[Q]} \textipa{[@]} \textipa{[\ae]} \textipa{[\textscripta]} \textipa{[\textopeno]} \textipa{[\oe]}
-$$
-$$
-\textipa{[t]} \textipa{[d]} \textipa{[C]} \textipa{[J]} \textipa{[k]} \textipa{[g]} \textipa{[q]} \textipa{[G\textsuperscript{\textipa{?}}]}
-$$
-$$
-\textipa{[\textphi]} \textipa{[\textbeta]} \textipa{[f]} \textipa{[v]} \textipa{[\texttheta]} \textipa{[\dh]} \textipa{[s]} \textipa{[\textesh]} \textipa{[\textyogh]}
-$$
-$$
-\textipa{[x]} \textipa{[\textchi]} \textipa{[\textscripta]} \textipa{[h]} \textipa{[H]}
-$$
-
-
-
+![[smaller_image. png#pic_center|650]]
 ## Daniel Jones Phonetic Alphabet (DJPA)
 ## John Kenyon & Thomas Knott Phonetic Alphabet (KKPA)
