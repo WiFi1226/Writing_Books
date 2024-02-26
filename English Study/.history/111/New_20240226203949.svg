@@ -91,4 +91,22 @@
 			<path d="M0 1h1V0H0zM611 1h1V0h-1zM0 792h1v-1H0zM611 792h1v-1h-1z" fill="#fff"/>
 		</g>
 	</g>
+	<clipPath id="js">
+		<path transform="matrix(1 0 0 -1 469.244 282.87)" d="M0 0h75v12.48H0z"/>
+	</clipPath>
+	<g data-name="Tx" clip-path="url(#js)">
+		<clipPath id="jt">
+			<path transform="matrix(1 0 0 -1 469.244 282.87)" d="M0 0h75v12.48H0z"/>
+		</clipPath>
+		<g clip-path="url(#jt)">
+			<use xlink:href="#dR" transform="matrix(8.5 0 0 -8.5 527.071 279.366)"/>
+			<use xlink:href="#dl" transform="matrix(8.5 0 0 -8.5 532.75 279.437)"/>
+			<use xlink:href="#dx" transform="matrix(8.5 0 0 -8.5 536.507 279.49)"/>
+			<use xlink:href="#fj" transform="matrix(8.5 0 0 -8.5 540.049 279.366)"/>
+		</g>
+	</g>
+
+
+
+
 </svg>
