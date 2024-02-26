@@ -14,8 +14,8 @@ License: MIT
 Copyright: © 2024 FAN WANG. All rights reserved.
 ---
 # International Phonetic Alphabet (IPA)
-![[undefined.svg]]
+![[IPA_Doulos_2015.svg]]
 
 ## Daniel Jones Phonetic Alphabet (DJPA)
-![[IPA_Doulos_2020_V_1200.svg]]
+![[IPA_Doulos_2020_CnP_1200.SVG]]
 ## John Kenyon & Thomas Knott Phonetic Alphabet (KKPA)
