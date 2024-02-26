@@ -16,6 +16,10 @@ Copyright: © 2024 FAN WANG. All rights reserved.
 # International Phonetic Alphabet (IPA)
 ![[IPA_All.svg]]
 ## Daniel Jones Phonetic Alphabet (DJPA)
-![[元音.svg]]
+```image-layout-b
 ![[辅音.svg]]
+![[元音.svg]]
+```
+
+
 ## John Kenyon & Thomas Knott Phonetic Alphabet (KKPA)
