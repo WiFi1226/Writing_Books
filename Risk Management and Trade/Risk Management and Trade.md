@@ -52,8 +52,8 @@ Given a time series \(y_t\), the GARCH (1,1) model for the conditional variance 
    y_t = \mu + \epsilon_t
    \end{aligned}$$
    Where:
-   - \(\mu\) is the mean of the series,
-   - \($\epsilon_t\$) is the error term at time \(t\), which is normally distributed with mean 0 and variance \(\sigma_t^2\).
+   - $\mu$  is the mean of the series,
+   - $\epsilon_t$ is the error term at time \(t\), which is normally distributed with mean 0 and variance \(\sigma_t^2\).
 
 2. **Variance Equation**:
    $$\begin{aligned}
