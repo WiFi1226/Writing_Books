@@ -20,6 +20,4 @@ Copyright: © 2024 FAN WANG. All rights reserved.
 ![[辅音.svg]]
 ![[元音.svg]]
 ```
-
-
 ## John Kenyon & Thomas Knott Phonetic Alphabet (KKPA)
