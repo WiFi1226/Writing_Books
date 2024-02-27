@@ -39,7 +39,3 @@ r_{t}=\frac{S_{t}-S_{t-1}}{S_{t-1}}
 $$
 
 
-	- dsjaldj
-		- 发大水加夫里什；a
-		- 范德萨；jf
-			- fdsf/afdsf/a
