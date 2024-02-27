@@ -39,3 +39,42 @@ r_{t}=\frac{S_{t}-S_{t-1}}{S_{t-1}}
 $$
 
 
+# GARCH (1,1) Model
+
+The Generalized Autoregressive Conditional Heteroskedasticity (GARCH) model, specifically GARCH (1,1), is a popular model for estimating the volatility of financial time series. It incorporates both autoregressive and moving average components for modeling the conditional variance of the time series. The GARCH (1,1) model can be represented as follows:
+
+## Model Definition
+
+Given a time series \(y_t\), the GARCH (1,1) model for the conditional variance \(\sigma_t^2\) is defined by two equations:
+
+1. **Mean Equation**:
+   $$\begin{aligned}
+   y_t = \mu + \epsilon_t
+   \end{aligned}$$
+   Where:
+   - \(\mu\) is the mean of the series,
+   - \($\epsilon_t\$) is the error term at time \(t\), which is normally distributed with mean 0 and variance \(\sigma_t^2\).
+
+2. **Variance Equation**:
+   $$\begin{aligned}
+   \sigma_t^2 = \alpha_0 + \alpha_1 \epsilon_{t-1}^2 + \beta_1 \sigma_{t-1}^2
+   \end{aligned}$$
+   Where:
+   - \(\sigma_t^2\) is the conditional variance at time \(t\),
+   - \(\alpha_0 > 0\) (constant term),
+   - \(\alpha_1, \beta_1 \geq 0\) are parameters of the model,
+   - \(\epsilon_{t-1}^2\) is the squared error term from the previous time period,
+   - \(\sigma_{t-1}^2\) is the conditional variance from the previous time period.
+
+## Parameter Constraints
+
+For the GARCH (1,1) model to be stationary and ensure that the conditional variance is positive, the parameters must satisfy the following constraints:
+
+- \(\alpha_0 > 0\),
+- \(\alpha_1 + \beta_1 < 1\).
+
+These constraints ensure that the impact of past squared errors and past variances on current variance diminishes over time.
+
+## Application
+
+The GARCH (1,1) model is widely used in financial applications to model and forecast the volatility of asset returns. Its ability to capture the "volatility clustering" phenomenon observed in financial time series makes it particularly useful for risk management, financial derivatives pricing, and strategic asset allocation.
