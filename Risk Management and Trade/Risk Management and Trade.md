@@ -45,7 +45,7 @@ The Generalized Autoregressive Conditional Heteroskedasticity (GARCH) model, spe
 
 ## Model Definition
 
-Given a time series \(y_t\), the GARCH (1,1) model for the conditional variance \(\sigma_t^2\) is defined by two equations:
+Given a time series ($y_t$), the GARCH (1,1) model for the conditional variance ($\sigma_t^2$) is defined by two equations:
 
 1. **Mean Equation**:
    $$\begin{aligned}
@@ -60,11 +60,11 @@ Given a time series \(y_t\), the GARCH (1,1) model for the conditional variance 
    \sigma_t^2 = \alpha_0 + \alpha_1 \epsilon_{t-1}^2 + \beta_1 \sigma_{t-1}^2
    \end{aligned}$$
    Where:
-   - \(\sigma_t^2\) is the conditional variance at time \(t\),
-   - \(\alpha_0 > 0\) (constant term),
-   - \(\alpha_1, \beta_1 \geq 0\) are parameters of the model,
-   - \(\epsilon_{t-1}^2\) is the squared error term from the previous time period,
-   - \(\sigma_{t-1}^2\) is the conditional variance from the previous time period.
+   - ($\sigma_t^2$) is the conditional variance at time ($t$),
+   - ($\alpha_0 > 0$) (constant term),
+   - ($\alpha_1, \beta_1 \geq 0$) are parameters of the model,
+   - ($\epsilon_{t-1}^2$) is the squared error term from the previous time period,
+   - ($\sigma_{t-1}^2$) is the conditional variance from the previous time period.
 
 ## Parameter Constraints
 
