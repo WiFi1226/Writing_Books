@@ -10,6 +10,22 @@ Version: 1.0.0
 License: MIT
 Copyright: © 2024 FAN WANG. All rights reserved.
 ---
+# Preliminaries
+## Anscombe's quartet
+**Problems when analysing using only basic statistical properties - the importance of visualisation
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Models
 ## Unit Root
@@ -41,6 +57,18 @@ $$
 r_{t}=\frac{S_{t}-S_{t-1}}{S_{t-1}}
 \end{aligned}
 $$
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # GARCH (1,1) Model
