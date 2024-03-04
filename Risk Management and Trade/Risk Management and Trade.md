@@ -23,7 +23,16 @@ The $\bar{x},\bar{y},var(x),var(y),\rho_{x,y},\beta{i}$ for each set of data are
 - Asset return 
 -  Sim
 
-
+```mermaid
+stateDiagram-v2
+        [*] --> Still
+        Still --> [*]
+    
+        Still --> Moving
+        Moving --> Still
+        Moving --> Crash
+        Crash --> [*]
+```
 
 
 # Models
