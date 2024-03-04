@@ -17,7 +17,11 @@ Copyright: © 2024 FAN WANG. All rights reserved.
 The $\bar{x},\bar{y},var(x),var(y),\rho_{x,y},\beta{i}$ for each set of data are almost the same,but their distributions are significantly different.
 
 
-
+# Return and Price
+## Definition 
+- Price: 
+- Asset return 
+-  Sim
 
 
 
