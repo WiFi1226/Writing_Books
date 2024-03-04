@@ -30,6 +30,10 @@ Level check&:Y_t = \mu + \epsilon_t
 \end{aligned}
 $$
 	- Target: The goal of the KPSS test is to test stationarity, and if the level test rejects the unit root hypothesis, the sequence may be stationary. If the trend test rejects the unit root trend, the sequence may be trending.
+- 
+- 
+- 
+- 
 - **Rate of Return ($r_t$)**
 	- Model:
 $$
