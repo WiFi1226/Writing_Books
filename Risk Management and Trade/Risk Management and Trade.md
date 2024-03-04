@@ -19,13 +19,13 @@ The $\bar{x},\bar{y},var(x),var(y),\rho_{x,y},\beta{i}$ for each set of data are
 # Return and Price
 ## Definition 
 $$
-P_{t} \xrightarrow{\text{first-order difference form}} R_{t}=\Delta S_{t} \xrightarrow{\text{first-order difference form}} 
+P_{t} \xrightarrow{\text{first-order difference form}} R_{t}=\Delta S_{t} \xrightarrow{\text{logarithmisation by means of a linear}} R_{t}=\Delta ln(S_{t}) \xrightarrow{\text{ODF => OR(Ratio)F}} R_{t}=ln(\frac{S_{t}}{S_{t-1}}) \xrightarrow{\text{arrange}} R_{t}=ln(\frac{S_{t}-S_{t-1}}{S_{t-1}}+1)
 $$
 
 
 
 
-为什么差分形式ke
+为什么差分形式可以移除线性趋势
 # Models
 ## Unit Root
 ### Unit Root Fundamental - Sequence instability
