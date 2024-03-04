@@ -20,11 +20,22 @@ The $\bar{x},\bar{y},var(x),var(y),\rho_{x,y},\beta{i}$ for each set of data are
 ## Definition 
 $$
 \begin{align}
-P_{t} \xrightarrow{\text{first-order difference form}} R_{t}=\Delta S_{t} \xrightarrow{\text{logarithmisation by means of a linear}} R_{t}=\Delta ln(S_{t}) \xrightarrow{\text{ODF => OR(Ratio)F}} R_{t}=ln(\frac{S_{t}}{S_{t-1}}) \\ \xrightarrow{\text{arrange}} R_{t}&=ln(\frac{S_{t}-S_{t-1}}{S_{t-1}}+1)\\&=ln(r+1)\\&\sim r(\text{Short-term or low yields})
+\because S_{t}=P_{t} \xrightarrow{\text{first-order difference form}} R_{t}=\Delta S_{t} \xrightarrow{\text{logarithmisation by means of a linear}} R_{t}=\Delta ln(S_{t}) \xrightarrow{\text{ODF => OR(Ratio)F}} R_{t}&=ln(\frac{S_{t}}{S_{t-1}}) \\
+=ln(\frac{S_{t}-S_{t-1}}{S_{t-1}}+1) \\
+=ln(r+1) \\
+&\sim r(\text{Short-term or low yields}) \\
+\
 \end{align}
 $$
 
+$$
+\begin{align}
+&x + y &&= 10 \\
+&2x - y &&= 5 \\
+&&&= 3x + 2
+\end{align}
 
+$$$
 
 
 为什么差分形式可以移除线性趋势
