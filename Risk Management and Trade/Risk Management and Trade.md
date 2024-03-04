@@ -16,14 +16,16 @@ Copyright: © 2024 FAN WANG. All rights reserved.
 ![[anscombes_quartet_transparent.svg]]
 The $\bar{x},\bar{y},var(x),var(y),\rho_{x,y},\beta{i}$ for each set of data are almost the same,but their distributions are significantly different.
 
-
 # Return and Price
 ## Definition 
 $$
-P_{t} \xrightarrow{C} B
+P_{t} \xrightarrow{\text{first-order difference form}} R_{t}=\Delta S_{t} \xrightarrow{\text{first-order difference form}} 
 $$
 
 
+
+
+为什么差分形式ke
 # Models
 ## Unit Root
 ### Unit Root Fundamental - Sequence instability
