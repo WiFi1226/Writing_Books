@@ -13,13 +13,8 @@ Copyright: © 2024 FAN WANG. All rights reserved.
 # Preliminaries
 ## Anscombe's quartet
 **Problems when analysing using only basic statistical properties - the importance of visualisation
-
-
-
-
-
-
-
+![[anscombes_quartet_transparent.svg]]
+The $\bar{x},\bar{y},var(x),var(y),\rho_{x,y},\beta{i}$ for each set of data are almost the same
 
 
 
