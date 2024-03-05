@@ -68,6 +68,18 @@ R_{t+1}\xlongequal{\text{Expected returns } (\mu) \text{ and stochastic volatili
 $$
 Since $\sigma_{R_{t+1}}$ (i.e. the volatility of returns) is the main objective of the modelling, we shift the objective to $\sigma_{t+1}^2$.
 
+# Volatility ($\sigma_{R_t}$)
+## Common definition
+- **Standard deviation of asset returns**
+$$
+\begin{aligned}
+\sigma_{R_{t+\tau}}^2&\xrightnarrow{\text{Covariance rate - usually denotes the mathematical definition of a single day's return & return}}frac{1}{T+\tau}\sum_{i=T}^{T+\tau}(R_{i} - \mu_{R_{t+1}}} )^2\\\
+&\xrightnarrow{\text{common definition of gain}}\sigme_{t+\tau}^2\\\\\\
+\xrightnarrow{\text{conversion of length of time}}\sigme_{daily}^2 \times D_{}
+\end{aligned}
+$$
+
+Translated with www.DeepL.com/Translator (free version)
 
 
 
