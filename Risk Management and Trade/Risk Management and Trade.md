@@ -24,7 +24,8 @@ The $\bar{x},\bar{y},var(x),var(y),\rho_{x,y},\beta_{i}$ for each set of data ar
 	- **Mean**: Small compared to standard deviation so not a concern 
 	- **Standard deviation (volatility)**: 
 		- Squared Returns: Balancing positive and negative effects ==> Emphasis on extreme movements 
-		    larger price movements (both positive and negative) contribute more to total volatility than smaller movements.
+			- $Corr(R_{t}^2,R_{t-\tau}^2)\approx 0, \tau \in \mathbb{Q}$
+			- larger price movements (both positive and negative) contribute more to total volatility than smaller movements.
 	- **Skewness**: Negative skewness
 	- **Kurtosis**: Extreme kurtosis ==> fat tail phenomenon
 ![[normal_high_kurtosis_neg_skew.svg]]
@@ -37,21 +38,21 @@ $$
 &\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\thinspace\sim r(\text{Short-term or low yields}) \\
 \end{align}
 $$
-
 ## Common definitions ($R_{t+1}$)
+- ? 这个定义咋回事, R^2 不关注了吗
 $$
 \begin{aligned}
-R_{t+1}\xlongequal{\text{Expected returns } (\mu) \text{ and stochastic volatility returns }(\sigma)}&\mu_{R_{t+1}}+\sigma_{R_{t+1}}z_{R_{t+1}},\space with \space z_{R_{t+1}} \sim i.i.d.\space \mathcal{N}(0,1)\\
+R_{t+1}\xlongequal{\text{Expected returns } (\mu) \text{ and stochastic volatility returns }(\sigma)}&\mu_{t+1}+\sigma_{t+1}z_{t+1},\space with \space z_{t+1} \sim i.i.d.\space \mathcal{N}(0,1)\\
 \\
 % 一阶中心矩（期望值）的推导 
- \mu_{R_{t+1}}&= E[R_{t+1}]\\
+ \mu_{R_{t+1}} &= E[R_{t+1}]\\
  &= E[\mu_{t+1} + \sigma_{t+1}z_{t+1}]\\
  &= \mu_{t+1} + \sigma_{t+1}E[z_{t+1}]\\
  &= \mu_{t+1} + \sigma_{t+1} \times 0\\
  &= \mu_{t+1}\\
 \\
 % 二阶中心矩（方差）的推导
-Var(R_{t+1}) &= E[(R_{t+1} - E[R_{t+1}])^2]\\
+\sigma_{R_{t+1}} &= E[(R_{t+1} - E[R_{t+1}])^2]\\
  &= E[(\mu_{t+1} + \sigma_{t+1}z_{t+1} - \mu_{t+1})^2]\\
  &= E[(\sigma_{t+1}z_{t+1})^2]\\
  &= \sigma_{t+1}^2 E[z_{t+1}^2]\\
@@ -59,6 +60,7 @@ Var(R_{t+1}) &= E[(R_{t+1} - E[R_{t+1}])^2]\\
  &= \sigma_{t+1}^2\\
 \end{aligned}
 $$
+Since $\sigma_{R_{t+1}}$ (i.e. the volatility of returns) is the main objective of the modelling, we shift the objective to $\sigma_{t+1}^2$.
 
 
 
@@ -69,7 +71,7 @@ $$
 
 
 
-条件方差与方差，二阶矩
+
 为什么差分形式可以移除线性趋势
 
 
