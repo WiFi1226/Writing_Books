@@ -28,11 +28,14 @@ $$
 $$
 
 ## Statistical characterisation of $R_{t}$ 
--  Autocorrelation: $Corr(R_{t},R_{t-\tau})\approx 0, \tau \in \mathbb{Q}$
-
-- Moment statistic
-	- Skewness: Negative skewness
-	- Kurtosis: Extreme kurtosis ==> fat tail phenomenon
+-  **Autocorrelation: $Corr(R_{t},R_{t-\tau})\approx 0, \tau \in \mathbb{Q}$
+- **Moment statistic
+	- **Mean**: Small compared to standard deviation so not a concern 
+	- **Standard deviation (volatility)**: 
+		- Squared Returns: Balancing positive and negative effects ==> Emphasis on extreme movements 
+			larger price movements (both positive and negative) contribute more to total volatility than smaller movements.
+	- **Skewness**: Negative skewness
+	- **Kurtosis**: Extreme kurtosis ==> fat tail phenomenon
 ![[normal_high_kurtosis_neg_skew.svg]]
 ```Stata
  ac R, lags(1500)
