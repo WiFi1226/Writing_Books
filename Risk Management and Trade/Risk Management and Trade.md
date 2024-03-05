@@ -31,10 +31,9 @@ $$
 -  Autocorrelation: $Corr(R_{t},R_{t-\tau})\approx 0, \tau \in \mathbb{Q}$
 
 - Moment statistic
-	- Skewness
-	- Kurtosis
-
-
+	- Skewness: Negative skewness
+	- Kurtosis: Extreme kurtosis ==> fat tail phenomenon
+![[normal_high_kurtosis_neg_skew.svg]]
 ```Stata
  ac R, lags(1500)
 ```
