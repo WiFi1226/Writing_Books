@@ -33,7 +33,7 @@ $$
 	- **Mean**: Small compared to standard deviation so not a concern 
 	- **Standard deviation (volatility)**: 
 		- Squared Returns: Balancing positive and negative effects ==> Emphasis on extreme movements 
-			larger price movements (both positive and negative) contribute more to total volatility than smaller movements.
+		    larger price movements (both positive and negative) contribute more to total volatility than smaller movements.
 	- **Skewness**: Negative skewness
 	- **Kurtosis**: Extreme kurtosis ==> fat tail phenomenon
 ![[normal_high_kurtosis_neg_skew.svg]]
