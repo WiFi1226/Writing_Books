@@ -18,7 +18,7 @@ The $\bar{x},\bar{y},var(x),var(y),\rho_{x,y},\beta_{i}$ for each set of data ar
 
 # Return($R_{t+1}$) 
 
-## Statistical characterisation of $R_{t}$ 
+## Statistical characterisation of $R_{t,\text{past}}$ 
 -  **Autocorrelation: $Corr(R_{t},R_{t-\tau})\approx 0, \tau \in \mathbb{Q}$
 - **Moment statistic
 	- **Mean**: Small compared to standard deviation so not a concern 
@@ -38,7 +38,7 @@ $$
 &\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\thinspace\sim r(\text{Short-term or low yields}) \\
 \end{align}
 $$
-## Common definition ($R_{t+1}$)   tips: $N=\frac{T_{total}}{\tau}$
+## Common definition ($R_{t+1}$)   tips: $N=\frac{T_{total}}{\tau}, \tau\text{$
 - ? 这个定义咋回事, R^2 不关注了吗, 是否等于 0 是在 R^2 的基础上要求的
 $$
 \begin{aligned}
