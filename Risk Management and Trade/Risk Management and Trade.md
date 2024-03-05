@@ -37,10 +37,6 @@ $$
 	- **Skewness**: Negative skewness
 	- **Kurtosis**: Extreme kurtosis ==> fat tail phenomenon
 ![[normal_high_kurtosis_neg_skew.svg]]
-```Stata
- ac R, lags(1500)
-```
-
 
 
 
