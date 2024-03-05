@@ -41,7 +41,22 @@ $$
 ## Common definitions ($R_{t+1}$)
 $$
 \begin{aligned}
-R_{t+1}\xlongequal{\text{Expected returns } (\mu) \text{ and stochastic volatility returns }(\sigma)}\mu_{R_{t+1}}+\sigma_{R_{t+1}}z_{R_{t+1}},\space with \space z_{R_{t+1}} \sim i.i.d.\space \mathcal{N}(0,1)
+R_{t+1}\xlongequal{\text{Expected returns } (\mu) \text{ and stochastic volatility returns }(\sigma)}&\mu_{R_{t+1}}+\sigma_{R_{t+1}}z_{R_{t+1}},\space with \space z_{R_{t+1}} \sim i.i.d.\space \mathcal{N}(0,1)\\
+\\
+% 一阶中心矩（期望值）的推导 
+ \mu_{R_{t+1}}&= E[R_{t+1}]\\
+ &= E[\mu_{t+1} + \sigma_{t+1}z_{t+1}]\\
+ &= \mu_{t+1} + \sigma_{t+1}E[z_{t+1}]\\
+ &= \mu_{t+1} + \sigma_{t+1} \times 0\\
+ &= \mu_{t+1}\\
+\\
+% 二阶中心矩（方差）的推导
+Var(R_{t+1}) &= E[(R_{t+1} - E[R_{t+1}])^2]\\
+ &= E[(\mu_{t+1} + \sigma_{t+1}z_{t+1} - \mu_{t+1})^2]\\
+ &= E[(\sigma_{t+1}z_{t+1})^2]\\
+ &= \sigma_{t+1}^2 E[z_{t+1}^2]\\
+ &= \sigma_{t+1}^2 \times 1\\
+ &= \sigma_{t+1}^2\\
 \end{aligned}
 $$
 
