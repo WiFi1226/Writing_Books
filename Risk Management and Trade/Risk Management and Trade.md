@@ -38,7 +38,7 @@ $$
 &\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\thinspace\sim r(\text{Short-term or low yields}) \\
 \end{align}
 $$
-## Common definition ($R_{t+1}$)
+## Common definition ($R_{t+1}$)   tips: $$
 - ? 这个定义咋回事, R^2 不关注了吗, 是否等于 0 是在 R^2 的基础上要求的
 $$
 \begin{aligned}
@@ -72,10 +72,10 @@ Since $\sigma_{R_{t+1}}$ (i.e. the volatility of returns) is the main objective 
 ## Common definition
 - **Standard deviation of asset returns**
 $$
-\begin{aligned}
-\sigma_{R_{t+\tau}}^2&\xrightnarrow{\text{Covariance rate - usually denotes the mathematical definition of a single day's return & return}}frac{1}{T+\tau}\sum_{i=T}^{T+\tau}(R_{i} - \mu_{R_{t+1}}} )^2\\\
-&\xrightnarrow{\text{common definition of gain}}\sigme_{t+\tau}^2\\\\\\
-\xrightnarrow{\text{conversion of length of time}}\sigme_{daily}^2 \times D_{}
+\begin{aligned} 
+\sigma_{R_{t+\tau}} &\xlongequal{\text{common definition of  return}}  E[(R_{t+\tau} - E[R_{t+\tau}])^2] \\ 
+&\xlongequal{\text{Covariance rate - usually denotes the mathematical definition of a single day's return}} \sigma_{t+\tau}^2 \\ 
+&\xlongequal{\text{conversion of length of time}}\sigma_{\text{daily}} \times \sqrt{\tau}
 \end{aligned}
 $$
 
