@@ -16,8 +16,8 @@ Copyright: © 2024 FAN WANG. All rights reserved.
 ![[anscombes_quartet_transparent.svg]]
 The $\bar{x},\bar{y},var(x),var(y),\rho_{x,y},\beta_{i}$ for each set of data are almost the same,but their distributions are significantly different.
 
-# Return and Price
-## Definition 
+# Return($R_{t}$) 
+## Mathematical definition
 $$
 \begin{align}
 \because\space&S_{t}=P_{t} \xrightarrow{\text{first-order difference form}} R_{t}=\Delta S_{t} \xrightarrow{\text{logarithmisation by means of a linear}} R_{t}=\Delta ln(S_{t}) \xrightarrow{\text{ODF => OR(Ratio)F}} R_{t}=ln(\frac{S_{t}}{S_{t-1}}) \\
@@ -37,7 +37,10 @@ $$
 	- **Skewness**: Negative skewness
 	- **Kurtosis**: Extreme kurtosis ==> fat tail phenomenon
 ![[normal_high_kurtosis_neg_skew.svg]]
+## Common definitions
+$$
 
+$$
 
 
 
