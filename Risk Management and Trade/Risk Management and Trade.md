@@ -39,7 +39,7 @@ $$
 \end{align}
 $$
 ## Common definitions ($R_{t+1}$)
-- ? 这个定义咋回事, R^2 不关注了吗
+- ? 这个定义咋回事, R^2 不关注了吗, 是否等于 0 是在 R^2 的基础上要求的
 $$
 \begin{aligned}
 R_{t+1}\xlongequal{\text{Expected returns } (\mu) \text{ and stochastic volatility returns }(\sigma)}&\mu_{t+1}+\sigma_{t+1}z_{t+1},\space with \space z_{t+1} \sim i.i.d.\space \mathcal{N}(0,1)\\
@@ -58,6 +58,12 @@ R_{t+1}\xlongequal{\text{Expected returns } (\mu) \text{ and stochastic volatili
  &= \sigma_{t+1}^2 E[z_{t+1}^2]\\
  &= \sigma_{t+1}^2 \times 1\\
  &= \sigma_{t+1}^2\\
+ \\
+\sigma_{R_{t+1}^2} &= E[(\mu_{t+1} + \sigma_{t+1}z_{t+1})^2] \\
+&= E[\mu_{t+1}^2 + 2\mu_{t+1}\sigma_{t+1}z_{t+1} + \sigma_{t+1}^2z_{t+1}^2] \\
+&= \mu_{t+1}^2 + 2\mu_{t+1}\sigma_{t+1}E[z_{t+1}] + \sigma_{t+1}^2E[z_{t+1}^2] \\
+&= \mu_{t+1}^2 + 2\mu_{t+1}\sigma_{t+1} \times 0 + \sigma_{t+1}^2 \times 1 \\
+&= \mu_{t+1}^2 + \sigma_{t+1}^2
 \end{aligned}
 $$
 Since $\sigma_{R_{t+1}}$ (i.e. the volatility of returns) is the main objective of the modelling, we shift the objective to $\sigma_{t+1}^2$.
@@ -72,15 +78,9 @@ Since $\sigma_{R_{t+1}}$ (i.e. the volatility of returns) is the main objective 
 
 
 
+
+
 为什么差分形式可以移除线性趋势
-
-
-
-
-
-
-
-
 
 
 
