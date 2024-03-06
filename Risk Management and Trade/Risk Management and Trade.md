@@ -96,6 +96,7 @@ $$
 &\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space=(1-\lambda)R_{t}^2+\lambda\sigma_{t}^2\\
 \end{aligned}
 $$
+![[variance_estimate_evolution_correct_time_step.svg]]
 
 
 
@@ -103,6 +104,15 @@ $$
 
 
 
+
+
+
+
+
+
+
+
+---
 # Models
 ## Unit Root
 ### Unit Root Fundamental - Sequence instability
