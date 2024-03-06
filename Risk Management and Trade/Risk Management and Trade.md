@@ -18,7 +18,7 @@ The $\bar{x},\bar{y},var(x),var(y),\rho_{x,y},\beta_{i}$ for each set of data ar
 
 # Return($R_{t+1}$) 
 
-## Statistical characterisation of $R_{t}$   tips: $\tau\text{ is step length}$
+## Statistical characterisation of $R_{t}$   tips: $\tau\text{ is measuring past steps}$
 -  **Autocorrelation: $Corr(R_{t},R_{t-\tau})\approx 0, \tau \in \mathbb{Q}$
 - **Moment statistic
 	- **Mean**: Small compared to standard deviation so not a concern 
@@ -45,14 +45,14 @@ $$
 R_{t+1}\xlongequal{\text{Expected returns } (\mu) \text{ and stochastic volatility returns }(\sigma)}&\mu_{t+1}+\sigma_{t+1}z_{t+1},\space with \space z_{t+1} \sim i.i.d.\space \mathcal{N}(0,1)\\
 \\
 % 一阶中心矩（期望值）的推导 
- \mu_{R_{t+1}} &= E(R_{t+1})= \frac{1}{T_{\text{total}}} \sum_{i=0}^{{T_{\text{total}}-1}}R_{t-i}\\
+ \mu_{R_{t+1}} &= E(R_{t+1})= \frac{1}{T_{\text{total}}} \sum_{\tau=0}^{{T_{\text{total}}-1}}R_{t-\tau}\\
  &= E(\mu_{t+1} + \sigma_{t+1}z_{t+1})\\
  &= \mu_{t+1} + \sigma_{t+1}E(z_{t+1})\\
  &= \mu_{t+1} + \sigma_{t+1} \times 0\\
  &= \mu_{t+1}\\
 \\
 % 二阶中心矩（方差）的推导
-\sigma_{R_{t+1}}&= E[R_{t+1} - E(R_{t+1})]^2= \frac{1}{T_{\text{total}}} \sum_{i=0}^{{T_{\text{total}-1}}} (R_{t-i} - \mu_{R_{t+1}})^2\\
+\sigma_{R_{t+1}}&= E[R_{t+1} - E(R_{t+1})]^2= \frac{1}{T_{\text{total}}}\sum_{\tau=0}^{{T_{\text{total}-1}}} (R_{t-\tau} - \mu_{R_{t+1}})^2\\
  &= E(\mu_{t+1} + \sigma_{t+1}z_{t+1} - \mu_{t+1})^2\\
  &= E(\sigma_{t+1}z_{t+1})^2\\
  &= \sigma_{t+1}^2 E(z_{t+1})^2\\
@@ -74,7 +74,7 @@ Since $\sigma_{R_{t+1}}$ (i.e. the volatility of returns) is the main objective 
 - ? 对于跳期的分析必要？
 $$
 \begin{aligned} 
-\sigma_{R_{t+1}} &\xlongequal{\text{common definition of  return}}  E[R_{t+1} - E(R_{t+1})]^2= \frac{1}{T_{\text{total}}} \sum_{i=0}^{T_{\text{total}}-1} (R_{t-i} - \mu_{R_{t+1}})^2
+\sigma_{R_{t+1}} &\xlongequal{\text{common definition of  return}}  E[R_{t+1} - E(R_{t+1})]^2= \frac{1}{T_{\text{total}}} \sum_{\tau=0}^{T_{\text{total}}-1} (R_{t-\tau} - \mu_{R_{t+1}})^2
 \\ 
 &\xlongequal{\text{Covariance rate - usually denotes the mathematical definition of a single day's return}} \sigma_{t+1}^2 \\ 
 &\xlongequal{\text{conversion of length of time}}\sigma_{\text{daily}} \times \sqrt{\tau}
@@ -84,10 +84,11 @@ $$
 Therefore, we have (Simple models treated as equivalent weights) 
 $$
 \begin{aligned}
-\sigma_{R_{t+1}} =\sigma^2_{t+1}&= \frac{1}{T_{total}}\sum_{i=0}^{T_{total}-1}(R_{t-i} - \mu_{R_{t+1}})^2\\
-&\xlongequal{\text{simple weighted average model}}\frac{1}{T_{total}}\sum_{j=0}^{T_{total}-1}R_{t-j}^{2},\space (s.t.\space \mu_{R_{t+1}}=0,\space\text{Includes current period})\\
-&\xlongequal{\text{RiskMetrics model}}(1-\lambda)\sum_{k=0}^\infty\lambda^{k} R_{t-k}^2,\space(s.t.\space(1-\lambda)\times\sum_{k=0}^{\infty}\lambda^{k}=(1-\lambda)\times \frac{1}{1-\lambda}=1)\\
-&\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space=
+\sigma_{R_{t+1}} =\sigma^2_{t+1}&= \frac{1}{T_{total}}\sum_{\tau=0}^{T_{total}-1}(R_{t-\tau} - \mu_{R_{t+1}})^2\\
+&\xlongequal{\text{simple weighted average model}}\frac{1}{T_{total}}\sum_{\tau=0}^{T_{total}-1}R_{t-\tau}^{2},\space (s.t.\space \mu_{R_{t+1}}=0,\space\text{Includes current period})\\
+&\xlongequal{\text{RiskMetrics model}}(1-\lambda)\sum_{\tau=0}^\infty\lambda^{\tau} R_{t-\tau}^2,\space(s.t.\space(1-\lambda)\times\sum_{\tau=0}^{\infty}\lambda^{\tau}=(1-\lambda)\times \frac{1}{1-\lambda}=1)\\
+&\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space=(1-\lambda)\sum_{\tau=1}^\infty\lambda^{\tau-1} R_{t-(\tau-1)}^2
+&\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space=(1-\lambda)\sum_{\tau=1}^\infty\lambda^{\tau-1} R_{t-(\tau-1)}^2
 \end{aligned}
 $$
 
@@ -109,75 +110,6 @@ $$
 
 
 ---
-
-
-好的, 让我详细推导一下 $E[R_{t+\tau} - E(R_{t+\tau})]^2$ 的计算公式:
-
-首先, 根据方差的定义:
-$$E[R_{t+\tau} - E(R_{t+\tau})]^2 = E[(R_{t+\tau} - \mu_{R_{t+\tau}})^2]$$
-其中 $\mu_{R_{t+\tau}} = E(R_{t+\tau})$
-
-对于单个时间点 $t+\tau$, 我们有 $T$ 个观测值, 记为 $R_{t+\tau,1}, R_{t+\tau,2}, \ldots, R_{t+\tau,T}$
-
-那么方差 $E[(R_{t+\tau} - \mu_{R_{t+\tau}})^2]$ 的样本估计量为:
-
-$$\frac{1}{T}\sum_{i=1}^T (R_{t+\tau,i} - \mu_{R_{t+\tau}})^2$$
-
-其中 $\mu_{R_{t+\tau}}$ 可以用样本均值 $\bar{R}_{t+\tau} = \frac{1}{T}\sum_{i=1}^T R_{t+\tau,i}$ 来估计。
-
-将样本均值代入上式, 得:
-
-$$\begin{aligned}
-\frac{1}{T}\sum_{i=1}^T (R_{t+\tau,i} - \bar{R}_{t+\tau})^2 
-&= \frac{1}{T}\sum_{i=1}^T \left(R_{t+\tau,i} - \frac{1}{T}\sum_{j=1}^T R_{t+\tau,j}\right)^2\\
-&= \frac{1}{T}\sum_{i=1}^T \left(R_{t+\tau,i}^2 - \frac{2R_{t+\tau,i}}{T}\sum_{j=1}^T R_{t+\tau,j} + \frac{1}{T^2}\left(\sum_{j=1}^T R_{t+\tau,j}\right)^2\right)\\
-&= \frac{1}{T}\sum_{i=1}^T R_{t+\tau,i}^2 - \frac{1}{T^2}\left(\sum_{j=1}^T R_{t+\tau,j}\right)^2
-\end{aligned}$$
-
-最后一步是由于 $\sum_{i=1}^T R_{t+\tau,i} = \sum_{j=1}^T R_{t+\tau,j}$。
-
-所以 $E[R_{t+\tau} - E(R_{t+\tau})]^2$ 的无偏估计量为:
-
-$$\boxed{\frac{1}{T}\sum_{i=1}^T R_{t+\tau,i}^2 - \left(\frac{1}{T}\sum_{j=1}^T R_{t+\tau,j}\right)^2}$$
-
-这就是方差的"总体--样本"推导公式, 其中:
-- $R_{t+\tau,i}$ 表示在时间 $t+\tau$ 时第 $i$ 个观测值
-- $T$ 表示在时间 $t+\tau$ 时的总观测值个数
-
-通过对单个时间点推导, 我们得到了包含所有时间下标的方差无偏估计公式。
-
-
-
-
-
-
-
-
-
-
-
-
-
-好的, 我来解释一下 $R_{t+\tau, i}$ 的意思:
-
-在时间序列分析中, 我们通常会观测一个随机变量在不同时间点的取值。设该随机变量为 $R_t$, 它表示时间 $t$ 时的回报率。
-
-因为我们有多个时间点的观测值, 所以需要用双重下标来表示。第一个下标 $t+\tau$ 表示观测发生的时间点, 其中 $t$ 是起始时间, 而 $\tau$ 表示滞后的时间间隔。
-
-第二个下标 $i$ 用来标记这个时间点的不同观测值, 因为在同一时间点, 可能会观测到多个不同的回报率取值, 比如来自不同的资产。
-
-所以 $R_{t+\tau, i}$ 的意思是: 在时间点 $t+\tau$ 处, 第 $i$ 个观测到的回报率值。
-
-用数学符号表示, 之前的那个公式应当修正为:
-
-$$\sigma_{R_{t+\tau}} \approx \frac{1}{T_{total}} \sum_{i=1}^{T_{total}} (R_{t+\tau, i} - \mu_{R_{t+\tau}})^2$$
-
-这里 $T_{total}$ 表示在时间点 $t+\tau$ 处总共观测到的回报率的个数。
-
-$\mu_{R_{t+\tau}}$ 则表示这些观测值的理论均值或样本均值。
-
-
-
 
 
 
