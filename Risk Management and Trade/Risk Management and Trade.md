@@ -79,8 +79,9 @@ $$
 &\xlongequal{\text{conversion of length of time}}\sigma_{\text{daily}} \times \sqrt{\tau}
 \end{aligned}
 $$
+$$
 
-
+$$
 
 
 
