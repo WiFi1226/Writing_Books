@@ -18,7 +18,7 @@ The $\bar{x},\bar{y},var(x),var(y),\rho_{x,y},\beta_{i}$ for each set of data ar
 
 # Return($R_{t+1}$) 
 
-## Statistical characterisation of $R_{t,\text{past}}$   tips: $\tau\text{ is step length}$
+## Statistical characterisation of $R_{t}$   tips: $\tau\text{ is step length}$
 -  **Autocorrelation: $Corr(R_{t},R_{t-\tau})\approx 0, \tau \in \mathbb{Q}$
 - **Moment statistic
 	- **Mean**: Small compared to standard deviation so not a concern 
@@ -38,7 +38,7 @@ $$
 &\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\thinspace\sim r(\text{Short-term or low yields}) \\
 \end{align}
 $$
-## Common definition ($R_{t+1}$)   tips: $N=\frac{T_{total}}{\tau}, \tau\text{ is interval}$
+## Common definition ($R_{t+1}$) 
 - ? 这个定义咋回事, R^2 不关注了吗, 是否等于 0 是在 R^2 的基础上要求的
 $$
 \begin{aligned}
@@ -68,15 +68,15 @@ R_{t+1}\xlongequal{\text{Expected returns } (\mu) \text{ and stochastic volatili
 $$
 Since $\sigma_{R_{t+1}}$ (i.e. the volatility of returns) is the main objective of the modelling, we shift the objective to $\sigma_{t+1}^2$.
 
-# Volatility ($\sigma_{R_t}$)
+# Volatility ($\sigma_{R_{t+1}}$)
 ## Common definition
 - **Standard deviation of asset returns
-- ? 对于 $\tau=2$ 的情况，公式该怎么修改
+- ? 对于跳期的分析必要？
 $$
 \begin{aligned} 
-\sigma_{R_{t+\tau}} &\xlongequal{\text{common definition of  return}}  E[R_{t+\tau} - E(R_{t+\tau})]^2= \frac{1}{\frac{T_{\text{total}}}{\tau}} \sum_{i=1}^{\frac{T_{\text{total}}}{\tau}} (R_i - \mu_{R_{t+\tau}})^2
+\sigma_{R_{t+1}} &\xlongequal{\text{common definition of  return}}  E[R_{t+1} - E(R_{t+1})]^2= \frac{1}{T_{\text{total}}} \sum_{i=0}^{T_{\text{total}}-1} (R_{t-i} - \mu_{R_{t+1}})^2
 \\ 
-&\xlongequal{\text{Covariance rate - usually denotes the mathematical definition of a single day's return}} \sigma_{t+\tau}^2 \\ 
+&\xlongequal{\text{Covariance rate - usually denotes the mathematical definition of a single day's return}} \sigma_{t+1}^2 \\ 
 &\xlongequal{\text{conversion of length of time}}\sigma_{\text{daily}} \times \sqrt{\tau}
 \end{aligned}
 $$
@@ -86,7 +86,8 @@ $$
 \begin{aligned}
 \sigma_{R_{t+1}} =\sigma^2_{t+1}&= \frac{1}{T_{total}}\sum_{i=0}^{T_{total}-1}(R_{t-i} - \mu_{R_{t+1}})^2\\
 &\xlongequal{\text{simple weighted average model}}\frac{1}{T_{total}}\sum_{j=0}^{T_{total}-1}R_{t-j}^{2},\space (s.t.\space \mu_{R_{t+1}}=0,\space\text{Includes current period})\\
-&\xlongequal{\text{RiskMetrics model}}(1-\lambda)\sum_{k=0}^\infty\lambda^{k} R_{t-k}^2,\space(s.t.\space(1-\lambda)\times\sum_{k=0}^{\infty}\lambda^{k}=(1-\lambda)\times \frac{1}{1-\lambda}=1)
+&\xlongequal{\text{RiskMetrics model}}(1-\lambda)\sum_{k=0}^\infty\lambda^{k} R_{t-k}^2,\space(s.t.\space(1-\lambda)\times\sum_{k=0}^{\infty}\lambda^{k}=(1-\lambda)\times \frac{1}{1-\lambda}=1)\\
+&\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space=
 \end{aligned}
 $$
 
