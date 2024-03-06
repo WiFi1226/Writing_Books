@@ -87,8 +87,13 @@ $$
 \sigma_{R_{t+1}} =\sigma^2_{t+1}&= \frac{1}{T_{total}}\sum_{\tau=0}^{T_{total}-1}(R_{t-\tau} - \mu_{R_{t+1}})^2\\
 &\xlongequal{\text{simple weighted average model}}\frac{1}{T_{total}}\sum_{\tau=0}^{T_{total}-1}R_{t-\tau}^{2},\space (s.t.\space \mu_{R_{t+1}}=0,\space\text{Includes current period})\\
 &\xlongequal{\text{RiskMetrics model}}(1-\lambda)\sum_{\tau=0}^\infty\lambda^{\tau} R_{t-\tau}^2,\space(s.t.\space(1-\lambda)\times\sum_{\tau=0}^{\infty}\lambda^{\tau}=(1-\lambda)\times \frac{1}{1-\lambda}=1)\\
-&\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space=(1-\lambda)\sum_{\tau=1}^\infty\lambda^{\tau-1} R_{t-(\tau-1)}^2
-&\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space=(1-\lambda)\sum_{\tau=1}^\infty\lambda^{\tau-1} R_{t-(\tau-1)}^2
+&\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space=(1-\lambda)\sum_{\tau-1=0}^\infty\lambda^{\tau-1} R_{t-(\tau-1)}^2\\
+&\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space=(1-\lambda)[R_{t}^2+\sum_{\tau=2}^{\infty} \lambda^{\tau-1} R_{t-(\tau-1)}^2]\\
+&\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space=(1-\lambda)[R_{t}^2+\sum_{\tau-2=0}^{\infty} \lambda^{(\tau-2)+1} R_{(t-1)-(\tau-2)}^2]\\
+&\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space=(1-\lambda)[R_{t}^2+\sum_{\tau'=0}^{\infty} \lambda^{\tau'+1} R_{(t-1)-\tau'}^2]\\
+&\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space=(1-\lambda)[R_{t}^2+\lambda\sum_{\tau'=0}^{\infty} \lambda^{\tau'} R_{(t-1)-\tau'}^2]\\
+&\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space=(1-\lambda)R_{t}^2+\lambda(1-\lambda)\sum_{\tau'=0}^{\infty} \lambda^{\tau'} R_{(t-1)-\tau'}^2\\
+&\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space=(1-\lambda)R_{t}^2+\lambda\sigma_{t}^2\\
 \end{aligned}
 $$
 
