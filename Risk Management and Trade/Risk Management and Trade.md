@@ -85,12 +85,61 @@ Therefore, we have (Simple models treated as equivalent weights)
 $$
 \begin{aligned}
 \sigma_{R_{t+1}} =\sigma^2_{t+1}&= \frac{1}{T_{total}}\sum_{i=1}^{T_{total}}(R_i - \mu_{R_{t+1}})^2\\
-&\xlongequal{\text{simple weighted average model}}\frac{1}{T_{total}}\sum_{j=0}^{T_{total}-1}R_{t-j}^{2,},\space (s.t.\space \mu_{R_{t+1}}=0,\space\text{Includes current period})
+&\xlongequal{\text{simple weighted average model}}\frac{1}{T_{total}}\sum_{j=0}^{T_{total}-1}R_{t+1-j}^{2,},\space (s.t.\space \mu_{R_{t+1}}=0,\space\text{Includes current period})
 \end{aligned}
 $$
 
 
 这个简化过程可以分解为以下几个步骤:
+
+好的, 我来详细解释一下 RiskMetrics 模型公式的推导过程:
+
+RiskMetrics 模型最初的波动率公式是:
+
+$$
+\begin{align}
+\because\space\sigma_{t+1}^2 &= (1-\lambda)\sum_{\tau=1}^\infty \lambda^{\tau-1} R_{t+1-\tau}^2\\ 
+\therefore\space\sigma_{t}^2 &= (1-\lambda)\sum_{\tau=1}^\infty \lambda^{\tau-1} R_{t-\tau}^2\\
+&= (1-\lambda)[R_{t+1}^2+\sum_{\tau=2}^\infty \lambda^{\tau-1} R_{t+1-\tau}^2] \\
+&= (1-\lambda)[R_{t+1}^2+\sum_{\tau-2=0}^\infty \lambda^{\tau-2+1} R_{t+1-(\tau-2)-2}^2]
+\end{align}
+$$
+
+
+
+很好的发现, 确实在那个公式中, R_i 下标处理有一些错误。我们来仔细分析一下:
+
+左边:
+\\sigma\_{R\_{t+\\tau}}
+
+表示在时间 t+τ时的回报率波动率。
+
+右边最初的定义应该是: $&\xlongequal{\text{common definition of return}} E[(R_{t+\tau} - E (R_{t+\\tau}))^2]$
+
+
+即时间 t+τ时的回报率与其期望值的差的平方的期望。
+
+然后用样本平均来估计这一 Population Moment:
+\\approx \\frac{1}{T\_{\\text{total}}} \\sum\_{i=1}^{T\_{\\text{total}}} (R\_{t+\\tau, i} - \\mu\_{R\_{t+\\tau}})^2
+
+其中 R_{t+τ, i}表示时间 t+τ对应的第 i 个观测回报率, 共有 T_total 个这样的观测值。
+
+所以你指出的 R_i 缺少了时间下标τ是正确的, 它应该写为 R_{t+τ, i}。
+
+完整的公式应为:
+
+\\sigma\_{R\_{t+\\tau}} &\\approx \\frac{1}{T\_{\\text{total}}} \\sum\_{i=1}^{T\_{\\text{total}}} (R\_{t+\\tau, i} - \\mu\_{R\_{t+\\tau}})^2
+
+这样才能准确表达出在时间 t+τ时的波动率的样本估计公式。
+
+非常感谢你的细心发现, 修正这个公式的下标确实很有必要。
+
+
+
+
+
+
+
 
 好的, 我来详细解释一下 RiskMetrics 模型公式的推导过程:
 
@@ -119,52 +168,6 @@ $$\sigma_t^2 = (1-\lambda)\nu_{t-1}$$
 第四步: 将 $\nu_{t-1}$ 展开表示为:
 $$\nu_{t-1}=\sum_{\tau=1}^\infty \lambda^{\tau-1} R_{t-\tau}^2 = \lambda \sum_{\tau=0}^\infty \lambda^{\tau} R_{t-\tau}^2 = \lambda \nu_t + \lambda R_t^2$$
 
-
-好的, 我来详细解释第四步的推导过程:
-
-第三步我们得到:
-$$\sigma_t^2 = (1-\lambda)\nu_{t-1}$$
-
-其中 $\nu_{t-1}$ 表示:
-$$\nu_{t-1} = \sum_{\tau=1}^\infty \lambda^{\tau-1} R_{t-\tau+1}^2$$
-
-我们希望将 $\nu_{t-1}$ 表示为当期 $\nu_t$ 和当期回报率平方 $R_t^2$ 的函数。
-
-首先注意到 $\nu_{t-1}$ 的求和下标从 $\tau=1$ 开始, 我们可以将它分成两部分:
-
-$$\nu_{t-1} = R_t^2 + \sum_{\tau=2}^\infty \lambda^{\tau-1}R_{t-\tau+1}^2$$
-
-对第二部分, 我们令 $\tau' = \tau - 1$, 则有:
-
-$$\sum_{\tau=2}^\infty \lambda^{\tau-1}R_{t-\tau+1}^2 = \sum_{\tau'=1}^\infty \lambda^{\tau'}R_{t-\tau'}^2$$
-
-合并上面两个式子, 得到:
-
-$$\nu_{t-1} = R_t^2 + \sum_{\tau'=1}^\infty \lambda^{\tau'} R_{t-\tau'}^2$$
-
-现在让我们定义 $\nu_t$ 为:
-
-$$\nu_t = \sum_{\tau'=1}^\infty \lambda^{\tau'} R_{t-\tau'+1}^2$$
-
-你会发现, 通过令 $\tau' \rightarrow \tau'-1$, 我们有:
-
-$$\nu_{t-1} = R_t^2 + \lambda \nu_t$$
-
-将这一结果代回第三步的方程, 我们得到:
-
-$$\sigma_t^2 = (1-\lambda)(R_t^2 + \lambda \nu_t)$$
-
-进一步展开并整理, 就能得到最终的递推式:
-
-$$\boxed{\sigma_t^2 = \lambda\sigma_{t+1}^2 + (1-\lambda)R_t^2}$$
-
-关键步骤是通过改变求和变量和下标, 将 $\nu_{t-1}$ 分解表示为当期回报率平方和滞后一期的 $\nu_t$ 的线性组合, 进而推导出两个波动率之间的递推关系。这利用了级数循环节性的性质。
-
-
-
-
-
-
 因为级数 $\sum \lambda^\tau$ 是等比级数, 和为 $\frac{1}{1-\lambda}$, 所以前项可化为 $\lambda \nu_t$。
 
 将这一表达式代回第三步, 得:
@@ -176,6 +179,8 @@ $$\sigma_t^2 = \lambda(1-\lambda)\nu_t + \lambda(1-\lambda)R_t^2$$
 
 进一步整理为:
 $$\boxed{\sigma_t^2 = \lambda \sigma_{t+1}^2 + (1-\lambda)R_t^2}$$
+
+
 
 # Models
 ## Unit Root
