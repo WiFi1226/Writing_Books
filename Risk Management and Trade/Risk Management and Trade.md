@@ -71,9 +71,7 @@ Since $\sigma_{R_{t+1}}$ (i.e. the volatility of returns) is the main objective 
 # Volatility ($\sigma_{R_t}$)
 ## Common definition
 - **Standard deviation of asset returns
-- ? 对于 
-
-Das
+- ? 对于 $\tau=2$ 的情况，公式该怎么修改
 $$
 \begin{aligned} 
 \sigma_{R_{t+\tau}} &\xlongequal{\text{common definition of  return}}  E[R_{t+\tau} - E(R_{t+\tau})]^2= \frac{1}{\frac{T_{\text{total}}}{\tau}} \sum_{i=1}^{\frac{T_{\text{total}}}{\tau}} (R_i - \mu_{R_{t+\tau}})^2
@@ -83,12 +81,11 @@ $$
 \end{aligned}
 $$
 
-
 Therefore, we have (Simple models treated as equivalent weights) 
 $$
 \begin{aligned}
-\sigma_{R_{t+1}} =\sigma^2_{t+1}&= \frac{1}{T_{total}}\sum_{i=1}^{T_{total}}(R_i - \mu_{R_{t+1}})^2\\
-&\xlongequal{\text{simple weighted average model}}\frac{1}{T_{total}}\sum_{j=1}^{T_{total}}R_{j}^{2},\space (s.t.\space \mu_{R_{t+1}}=0,\space\text{Includes current period})
+\sigma_{R_{t+1}} =\sigma^2_{t+1}&= \frac{1}{T_{total}}\sum_{i=0}^{T_{total}-1}(R_{t-i} - \mu_{R_{t+1}})^2\\
+&\xlongequal{\text{simple weighted average model}}\frac{1}{T_{total}}\sum_{j=0}^{T_{total}-1}R_{t-j}^{2},\space (s.t.\space \mu_{R_{t+1}}=0,\space\text{Includes current period})
 \end{aligned}
 $$
 
