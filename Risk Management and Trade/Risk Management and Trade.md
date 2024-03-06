@@ -84,7 +84,12 @@ $$
 前者是简单加权平均模型, 后者是无条件方差的样本估计量。两者之间存在一些关系和推导:
 
 无条件方差样本估计量:
-$$\hat{\sigma}^2_{R_{t+1}} = \frac{1}{T_{total}}\sum_{i=1}^{T_{total}}(R_i - \mu_{R_{t+1}})^2$$
+$$
+\begin{aligned}
+\sigma_{R_{t+1}} =\sigma^2_{t+1}&= \frac{1}{T_{total}}\sum_{i=1}^{T_{total}}(R_i - \mu_{R_{t+1}})^2\\
+&\xlongequal{\text{simple weighted average model}}
+\end{aligned}
+$$
 
 简单加权平均模型为:
 $$\sigma^2_{t+1} = \frac{1}{m}\sum_{j=0}^{m-1}R_{t-j}^2$$
