@@ -85,7 +85,8 @@ Therefore, we have (Simple models treated as equivalent weights)
 $$
 \begin{aligned}
 \sigma_{R_{t+1}} =\sigma^2_{t+1}&= \frac{1}{T_{total}}\sum_{i=0}^{T_{total}-1}(R_{t-i} - \mu_{R_{t+1}})^2\\
-&\xlongequal{\text{simple weighted average model}}\frac{1}{T_{total}}\sum_{j=0}^{T_{total}-1}R_{t-j}^{2},\space (s.t.\space \mu_{R_{t+1}}=0,\space\text{Includes current period})
+&\xlongequal{\text{simple weighted average model}}\frac{1}{T_{total}}\sum_{j=0}^{T_{total}-1}R_{t-j}^{2},\space (s.t.\space \mu_{R_{t+1}}=0,\space\text{Includes current period})\\
+&\xlongequal{\text{RiskMetrics model}}(1-\lambda)\sum_{k=0}^\infty\lambda^{k} R_{t-k}^2,\space(s.t.\space(1-\lambda)\times\sum_{k=0}^{\infty}\lambda^{k}=(1-\lambda)\times \frac{1}{1-\lambda}=1)
 \end{aligned}
 $$
 
@@ -98,7 +99,7 @@ RiskMetrics 模型最初的波动率公式是:
 
 $$
 \begin{align}
-\because\space\sigma_{t+1}^2 &= (1-\lambda)\sum_{\tau=1}^\infty \lambda^{\tau-1} R_{t+1-\tau}^2\\ 
+\because\space\sigma_{t+1}^2 &= \\ 
 \therefore\space\sigma_{t}^2 &= (1-\lambda)\sum_{\tau=1}^\infty \lambda^{\tau-1} R_{t-\tau}^2\\
 &= (1-\lambda)[R_{t+1}^2+\sum_{\tau=2}^\infty \lambda^{\tau-1} R_{t+1-\tau}^2] \\
 &= (1-\lambda)[R_{t+1}^2+\sum_{\tau-2=0}^\infty \lambda^{\tau-2+1} R_{t+1-(\tau-2)-2}^2]
