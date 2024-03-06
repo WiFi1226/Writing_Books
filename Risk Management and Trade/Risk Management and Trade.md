@@ -45,14 +45,14 @@ $$
 R_{t+1}\xlongequal{\text{Expected returns } (\mu) \text{ and stochastic volatility returns }(\sigma)}&\mu_{t+1}+\sigma_{t+1}z_{t+1},\space with \space z_{t+1} \sim i.i.d.\space \mathcal{N}(0,1)\\
 \\
 % 一阶中心矩（期望值）的推导 
- \mu_{R_{t+1}} &= E(R_{t+1})\\
+ \mu_{R_{t+1}} &= E(R_{t+1})= \frac{1}{T_{\text{total}}} \sum_{i=1}^{{T_{\text{total}}}}R_i\\
  &= E(\mu_{t+1} + \sigma_{t+1}z_{t+1})\\
  &= \mu_{t+1} + \sigma_{t+1}E(z_{t+1})\\
  &= \mu_{t+1} + \sigma_{t+1} \times 0\\
  &= \mu_{t+1}\\
 \\
 % 二阶中心矩（方差）的推导
-\sigma_{R_{t+1}}&= E[R_{t+1} - E(R_{t+1})]^2= \sqrt{\frac{1}{T_{\text{total}}} \sum_{i=1}^{{T_{\text{total}}}} (R_i - \mu_{R_{t+\tau}})^2}\\
+\sigma_{R_{t+1}}&= E[R_{t+1} - E(R_{t+1})]^2= \frac{1}{T_{\text{total}}} \sum_{i=1}^{{T_{\text{total}}}} (R_i - \mu_{R_{t+1}})^2\\
  &= E(\mu_{t+1} + \sigma_{t+1}z_{t+1} - \mu_{t+1})^2\\
  &= E(\sigma_{t+1}z_{t+1})^2\\
  &= \sigma_{t+1}^2 E(z_{t+1})^2\\
@@ -73,7 +73,7 @@ Since $\sigma_{R_{t+1}}$ (i.e. the volatility of returns) is the main objective 
 - **Standard deviation of asset returns**
 $$
 \begin{aligned} 
-\sigma_{R_{t+\tau}} &\xlongequal{\text{common definition of  return}}  E[R_{t+\tau} - E(R_{t+\tau})]^2= \sqrt{\frac{1}{\frac{T_{\text{total}}}{\tau}} \sum_{i=1}^{\frac{T_{\text{total}}}{\tau}} (R_i - \mu_{R_{t+\tau}})^2}
+\sigma_{R_{t+\tau}} &\xlongequal{\text{common definition of  return}}  E[R_{t+\tau} - E(R_{t+\tau})]^2= \frac{1}{\frac{T_{\text{total}}}{\tau}} \sum_{i=1}^{\frac{T_{\text{total}}}{\tau}} (R_i - \mu_{R_{t+\tau}})^2
 \\ 
 &\xlongequal{\text{Covariance rate - usually denotes the mathematical definition of a single day's return}} \sigma_{t+\tau}^2 \\ 
 &\xlongequal{\text{conversion of length of time}}\sigma_{\text{daily}} \times \sqrt{\tau}
