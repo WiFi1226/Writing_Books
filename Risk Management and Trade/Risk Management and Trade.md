@@ -45,14 +45,14 @@ $$
 R_{t+1}\xlongequal{\text{Expected returns } (\mu) \text{ and stochastic volatility returns }(\sigma)}&\mu_{t+1}+\sigma_{t+1}z_{t+1},\space with \space z_{t+1} \sim i.i.d.\space \mathcal{N}(0,1)\\
 \\
 % 一阶中心矩（期望值）的推导 
- \mu_{R_{t+1}} &= E(R_{t+1})= \frac{1}{T_{\text{total}}} \sum_{i=1}^{{T_{\text{total}}}}R_i\\
+ \mu_{R_{t+1}} &= E(R_{t+1})= \frac{1}{T_{\text{total}}} \sum_{i=0}^{{T_{\text{total}}-1}}R_{t-i}\\
  &= E(\mu_{t+1} + \sigma_{t+1}z_{t+1})\\
  &= \mu_{t+1} + \sigma_{t+1}E(z_{t+1})\\
  &= \mu_{t+1} + \sigma_{t+1} \times 0\\
  &= \mu_{t+1}\\
 \\
 % 二阶中心矩（方差）的推导
-\sigma_{R_{t+1}}&= E[R_{t+1} - E(R_{t+1})]^2= \frac{1}{T_{\text{total}}} \sum_{i=1}^{{T_{\text{total}}}} (R_i - \mu_{R_{t+1}})^2\\
+\sigma_{R_{t+1}}&= E[R_{t+1} - E(R_{t+1})]^2= \frac{1}{T_{\text{total}}} \sum_{i=0}^{{T_{\text{total}-1}}} (R_{t-i} - \mu_{R_{t+1}})^2\\
  &= E(\mu_{t+1} + \sigma_{t+1}z_{t+1} - \mu_{t+1})^2\\
  &= E(\sigma_{t+1}z_{t+1})^2\\
  &= \sigma_{t+1}^2 E(z_{t+1})^2\\
@@ -70,7 +70,10 @@ Since $\sigma_{R_{t+1}}$ (i.e. the volatility of returns) is the main objective 
 
 # Volatility ($\sigma_{R_t}$)
 ## Common definition
-- **Standard deviation of asset returns**
+- **Standard deviation of asset returns
+- ? 对于 
+
+Das
 $$
 \begin{aligned} 
 \sigma_{R_{t+\tau}} &\xlongequal{\text{common definition of  return}}  E[R_{t+\tau} - E(R_{t+\tau})]^2= \frac{1}{\frac{T_{\text{total}}}{\tau}} \sum_{i=1}^{\frac{T_{\text{total}}}{\tau}} (R_i - \mu_{R_{t+\tau}})^2
@@ -85,7 +88,7 @@ Therefore, we have (Simple models treated as equivalent weights)
 $$
 \begin{aligned}
 \sigma_{R_{t+1}} =\sigma^2_{t+1}&= \frac{1}{T_{total}}\sum_{i=1}^{T_{total}}(R_i - \mu_{R_{t+1}})^2\\
-&\xlongequal{\text{simple weighted average model}}\frac{1}{T_{total}}\sum_{j=0}^{T_{total}-1}R_{t+1-j}^{2,},\space (s.t.\space \mu_{R_{t+1}}=0,\space\text{Includes current period})
+&\xlongequal{\text{simple weighted average model}}\frac{1}{T_{total}}\sum_{j=1}^{T_{total}}R_{j}^{2},\space (s.t.\space \mu_{R_{t+1}}=0,\space\text{Includes current period})
 \end{aligned}
 $$
 
