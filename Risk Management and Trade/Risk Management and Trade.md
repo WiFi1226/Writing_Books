@@ -106,33 +106,73 @@ $$
 $$
 
 
-
-很好的发现, 确实在那个公式中, R_i 下标处理有一些错误。我们来仔细分析一下:
-
-左边:
-\\sigma\_{R\_{t+\\tau}}
-
-表示在时间 t+τ时的回报率波动率。
-
-右边最初的定义应该是: $&\xlongequal{\text{common definition of return}} E[(R_{t+\tau} - E (R_{t+\\tau}))^2]$
+---
 
 
-即时间 t+τ时的回报率与其期望值的差的平方的期望。
+好的, 让我详细推导一下 $E[R_{t+\tau} - E(R_{t+\tau})]^2$ 的计算公式:
 
-然后用样本平均来估计这一 Population Moment:
-\\approx \\frac{1}{T\_{\\text{total}}} \\sum\_{i=1}^{T\_{\\text{total}}} (R\_{t+\\tau, i} - \\mu\_{R\_{t+\\tau}})^2
+首先, 根据方差的定义:
+$$E[R_{t+\tau} - E(R_{t+\tau})]^2 = E[(R_{t+\tau} - \mu_{R_{t+\tau}})^2]$$
+其中 $\mu_{R_{t+\tau}} = E(R_{t+\tau})$
 
-其中 R_{t+τ, i}表示时间 t+τ对应的第 i 个观测回报率, 共有 T_total 个这样的观测值。
+对于单个时间点 $t+\tau$, 我们有 $T$ 个观测值, 记为 $R_{t+\tau,1}, R_{t+\tau,2}, \ldots, R_{t+\tau,T}$
 
-所以你指出的 R_i 缺少了时间下标τ是正确的, 它应该写为 R_{t+τ, i}。
+那么方差 $E[(R_{t+\tau} - \mu_{R_{t+\tau}})^2]$ 的样本估计量为:
 
-完整的公式应为:
+$$\frac{1}{T}\sum_{i=1}^T (R_{t+\tau,i} - \mu_{R_{t+\tau}})^2$$
 
-\\sigma\_{R\_{t+\\tau}} &\\approx \\frac{1}{T\_{\\text{total}}} \\sum\_{i=1}^{T\_{\\text{total}}} (R\_{t+\\tau, i} - \\mu\_{R\_{t+\\tau}})^2
+其中 $\mu_{R_{t+\tau}}$ 可以用样本均值 $\bar{R}_{t+\tau} = \frac{1}{T}\sum_{i=1}^T R_{t+\tau,i}$ 来估计。
 
-这样才能准确表达出在时间 t+τ时的波动率的样本估计公式。
+将样本均值代入上式, 得:
 
-非常感谢你的细心发现, 修正这个公式的下标确实很有必要。
+$$\begin{aligned}
+\frac{1}{T}\sum_{i=1}^T (R_{t+\tau,i} - \bar{R}_{t+\tau})^2 
+&= \frac{1}{T}\sum_{i=1}^T \left(R_{t+\tau,i} - \frac{1}{T}\sum_{j=1}^T R_{t+\tau,j}\right)^2\\
+&= \frac{1}{T}\sum_{i=1}^T \left(R_{t+\tau,i}^2 - \frac{2R_{t+\tau,i}}{T}\sum_{j=1}^T R_{t+\tau,j} + \frac{1}{T^2}\left(\sum_{j=1}^T R_{t+\tau,j}\right)^2\right)\\
+&= \frac{1}{T}\sum_{i=1}^T R_{t+\tau,i}^2 - \frac{1}{T^2}\left(\sum_{j=1}^T R_{t+\tau,j}\right)^2
+\end{aligned}$$
+
+最后一步是由于 $\sum_{i=1}^T R_{t+\tau,i} = \sum_{j=1}^T R_{t+\tau,j}$。
+
+所以 $E[R_{t+\tau} - E(R_{t+\tau})]^2$ 的无偏估计量为:
+
+$$\boxed{\frac{1}{T}\sum_{i=1}^T R_{t+\tau,i}^2 - \left(\frac{1}{T}\sum_{j=1}^T R_{t+\tau,j}\right)^2}$$
+
+这就是方差的"总体--样本"推导公式, 其中:
+- $R_{t+\tau,i}$ 表示在时间 $t+\tau$ 时第 $i$ 个观测值
+- $T$ 表示在时间 $t+\tau$ 时的总观测值个数
+
+通过对单个时间点推导, 我们得到了包含所有时间下标的方差无偏估计公式。
+
+
+
+
+
+
+
+
+
+
+
+
+
+好的, 我来解释一下 $R_{t+\tau, i}$ 的意思:
+
+在时间序列分析中, 我们通常会观测一个随机变量在不同时间点的取值。设该随机变量为 $R_t$, 它表示时间 $t$ 时的回报率。
+
+因为我们有多个时间点的观测值, 所以需要用双重下标来表示。第一个下标 $t+\tau$ 表示观测发生的时间点, 其中 $t$ 是起始时间, 而 $\tau$ 表示滞后的时间间隔。
+
+第二个下标 $i$ 用来标记这个时间点的不同观测值, 因为在同一时间点, 可能会观测到多个不同的回报率取值, 比如来自不同的资产。
+
+所以 $R_{t+\tau, i}$ 的意思是: 在时间点 $t+\tau$ 处, 第 $i$ 个观测到的回报率值。
+
+用数学符号表示, 之前的那个公式应当修正为:
+
+$$\sigma_{R_{t+\tau}} \approx \frac{1}{T_{total}} \sum_{i=1}^{T_{total}} (R_{t+\tau, i} - \mu_{R_{t+\tau}})^2$$
+
+这里 $T_{total}$ 表示在时间点 $t+\tau$ 处总共观测到的回报率的个数。
+
+$\mu_{R_{t+\tau}}$ 则表示这些观测值的理论均值或样本均值。
 
 
 
