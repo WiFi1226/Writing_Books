@@ -18,7 +18,7 @@ The $\bar{x},\bar{y},var(x),var(y),\rho_{x,y},\beta_{i}$ for each set of data ar
 
 # Return($R_{t+1}$) 
 
-## Statistical characterisation of $R_{t,\text{past}}$ 
+## Statistical characterisation of $R_{t,\text{past}}$   tips: $\tau\text{ is step length}$
 -  **Autocorrelation: $Corr(R_{t},R_{t-\tau})\approx 0, \tau \in \mathbb{Q}$
 - **Moment statistic
 	- **Mean**: Small compared to standard deviation so not a concern 
@@ -38,30 +38,30 @@ $$
 &\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\thinspace\sim r(\text{Short-term or low yields}) \\
 \end{align}
 $$
-## Common definition ($R_{t+1}$)   tips: $N=\frac{T_{total}}{\tau}, \tau\text{$
+## Common definition ($R_{t+1}$)   tips: $N=\frac{T_{total}}{\tau}, \tau\text{ is interval}$
 - ? 这个定义咋回事, R^2 不关注了吗, 是否等于 0 是在 R^2 的基础上要求的
 $$
 \begin{aligned}
 R_{t+1}\xlongequal{\text{Expected returns } (\mu) \text{ and stochastic volatility returns }(\sigma)}&\mu_{t+1}+\sigma_{t+1}z_{t+1},\space with \space z_{t+1} \sim i.i.d.\space \mathcal{N}(0,1)\\
 \\
 % 一阶中心矩（期望值）的推导 
- \mu_{R_{t+1}} &= E[R_{t+1}]\\
- &= E[\mu_{t+1} + \sigma_{t+1}z_{t+1}]\\
- &= \mu_{t+1} + \sigma_{t+1}E[z_{t+1}]\\
+ \mu_{R_{t+1}} &= E(R_{t+1})\\
+ &= E(\mu_{t+1} + \sigma_{t+1}z_{t+1})\\
+ &= \mu_{t+1} + \sigma_{t+1}E(z_{t+1})\\
  &= \mu_{t+1} + \sigma_{t+1} \times 0\\
  &= \mu_{t+1}\\
 \\
 % 二阶中心矩（方差）的推导
-\sigma_{R_{t+1}} &= E[(R_{t+1} - E[R_{t+1}])^2]\\
- &= E[(\mu_{t+1} + \sigma_{t+1}z_{t+1} - \mu_{t+1})^2]\\
- &= E[(\sigma_{t+1}z_{t+1})^2]\\
- &= \sigma_{t+1}^2 E[z_{t+1}^2]\\
+\sigma_{R_{t+1}}&= E[R_{t+1} - E(R_{t+1})]^2= \sqrt{\frac{1}{T_{\text{total}}} \sum_{i=1}^{{T_{\text{total}}}} (R_i - \mu_{R_{t+\tau}})^2}\\
+ &= E(\mu_{t+1} + \sigma_{t+1}z_{t+1} - \mu_{t+1})^2\\
+ &= E(\sigma_{t+1}z_{t+1})^2\\
+ &= \sigma_{t+1}^2 E(z_{t+1})^2\\
  &= \sigma_{t+1}^2 \times 1\\
  &= \sigma_{t+1}^2\\
  \\
-\sigma_{R_{t+1}^2} &= E[(\mu_{t+1} + \sigma_{t+1}z_{t+1})^2] \\
-&= E[\mu_{t+1}^2 + 2\mu_{t+1}\sigma_{t+1}z_{t+1} + \sigma_{t+1}^2z_{t+1}^2] \\
-&= \mu_{t+1}^2 + 2\mu_{t+1}\sigma_{t+1}E[z_{t+1}] + \sigma_{t+1}^2E[z_{t+1}^2] \\
+\sigma_{R_{t+1}^2} &= E(\mu_{t+1} + \sigma_{t+1}z_{t+1})^2 \\
+&= E(\mu_{t+1}^2 + 2\mu_{t+1}\sigma_{t+1}z_{t+1} + \sigma_{t+1}^2z_{t+1}^2) \\
+&= \mu_{t+1}^2 + 2\mu_{t+1}\sigma_{t+1}E(z_{t+1}) + \sigma_{t+1}^2E(z_{t+1})^2\\
 &= \mu_{t+1}^2 + 2\mu_{t+1}\sigma_{t+1} \times 0 + \sigma_{t+1}^2 \times 1 \\
 &= \mu_{t+1}^2 + \sigma_{t+1}^2
 \end{aligned}
@@ -73,7 +73,8 @@ Since $\sigma_{R_{t+1}}$ (i.e. the volatility of returns) is the main objective 
 - **Standard deviation of asset returns**
 $$
 \begin{aligned} 
-\sigma_{R_{t+\tau}} &\xlongequal{\text{common definition of  return}}  E[(R_{t+\tau} - E[R_{t+\tau}])^2] \\ 
+\sigma_{R_{t+\tau}} &\xlongequal{\text{common definition of  return}}  E[R_{t+\tau} - E(R_{t+\tau})]^2= \sqrt{\frac{1}{\frac{T_{\text{total}}}{\tau}} \sum_{i=1}^{\frac{T_{\text{total}}}{\tau}} (R_i - \mu_{R_{t+\tau}})^2}
+\\ 
 &\xlongequal{\text{Covariance rate - usually denotes the mathematical definition of a single day's return}} \sigma_{t+\tau}^2 \\ 
 &\xlongequal{\text{conversion of length of time}}\sigma_{\text{daily}} \times \sqrt{\tau}
 \end{aligned}
