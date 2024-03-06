@@ -92,24 +92,90 @@ $$
 
 这个简化过程可以分解为以下几个步骤:
 
-1. 首先给出了 RiskMetrics 波动率模型的通用公式表示:
-$$\sigma_{t+1}^2 = (1 - \lambda) \sum_{\tau=1}^\infty \lambda^{\tau-1} R_{t+1-\tau}^2$$
-其中 $0 < \lambda < 1$, $\sigma_{t+1}^2$ 是未来时间点 $t+1$ 的方差预测值, $R_{t+1-\tau}$ 是 $t+1-\tau$ 时间点的回报率。
+好的, 我来详细解释一下 RiskMetrics 模型公式的推导过程:
 
-2. 将无穷求和部分提取出来, 用递推关系式表示:
-$$\sigma_{t+1}^2 = \lambda \sigma_t^2 + (1-\lambda)R_t^2$$
-其中 $\sigma_t^2$ 是当前时间点 $t$ 的方差, $R_t^2$ 是当前时间点的回报率平方。
+RiskMetrics 模型最初的波动率公式是:
 
-3. 解释了这一递推式的意义: $\sigma_{t+1}^2$ 是明天的波动性预测值, 是当天波动性 $\sigma_t^2$ 和当天回报率平方 $R_t^2$ 的加权平均。
+$$\sigma_{t+1}^2 = (1-\lambda)\sum_{\tau=1}^\infty \lambda^{\tau-1} R_{t+1-\tau}^2 \tag{1}$$
 
-4. 通过这一递推关系, 只要观测到当前时间点的波动率 $\sigma_t^2$ 和回报率平方 $R_t^2$, 就可以预测未来任意时间点的波动率 $\sigma_{t+1}^2$。
+其中:
+- $\sigma_{t+1}^2$ 是时间 t+1 的条件方差 (波动率)预测值
+- $R_{t+1-\tau}$ 是落后 $\tau$ 期的回报率平方
+- $\lambda$ 是衰减因子, 满足 $0<\lambda<1$
 
-5. 权重参数 $\lambda$ 控制了过去观测值的贡献大小。$\lambda$ 越大, 过去观测值的影响越持久; $\lambda$ 越小, 新观测值的影响越大。
+我们想将其化简为关于当期波动率和回报率平方的递归形式。
 
-综上, 该简化过程利用了加权平均的递推思想, 将 RiskMetrics 波动率模型从无穷求和形式化简为易于计算和预测的递归形式, 并阐明了参数 $\lambda$ 的作用机制。这一简化使得实际运算和参数估计更加直观和方便。
+第一步: 将求和部分单独提取出来, 设为:
+$$\nu_t = \sum_{\tau=1}^\infty \lambda^{\tau-1} R_{t-\tau+1}^2$$
+
+这实际上将当期及之前所有回报率的加权平均定义为 $\nu_t$。
+
+第二步: 将 $\nu_t$ 代入原方程:
+$$\sigma_{t+1}^2 = (1-\lambda)\nu_t$$
+
+第三步: 滞后一期, 得到:
+$$\sigma_t^2 = (1-\lambda)\nu_{t-1}$$
+
+第四步: 将 $\nu_{t-1}$ 展开表示为:
+$$\nu_{t-1}=\sum_{\tau=1}^\infty \lambda^{\tau-1} R_{t-\tau}^2 = \lambda \sum_{\tau=0}^\infty \lambda^{\tau} R_{t-\tau}^2 = \lambda \nu_t + \lambda R_t^2$$
+
+
+好的, 我来详细解释第四步的推导过程:
+
+第三步我们得到:
+$$\sigma_t^2 = (1-\lambda)\nu_{t-1}$$
+
+其中 $\nu_{t-1}$ 表示:
+$$\nu_{t-1} = \sum_{\tau=1}^\infty \lambda^{\tau-1} R_{t-\tau+1}^2$$
+
+我们希望将 $\nu_{t-1}$ 表示为当期 $\nu_t$ 和当期回报率平方 $R_t^2$ 的函数。
+
+首先注意到 $\nu_{t-1}$ 的求和下标从 $\tau=1$ 开始, 我们可以将它分成两部分:
+
+$$\nu_{t-1} = R_t^2 + \sum_{\tau=2}^\infty \lambda^{\tau-1}R_{t-\tau+1}^2$$
+
+对第二部分, 我们令 $\tau' = \tau - 1$, 则有:
+
+$$\sum_{\tau=2}^\infty \lambda^{\tau-1}R_{t-\tau+1}^2 = \sum_{\tau'=1}^\infty \lambda^{\tau'}R_{t-\tau'}^2$$
+
+合并上面两个式子, 得到:
+
+$$\nu_{t-1} = R_t^2 + \sum_{\tau'=1}^\infty \lambda^{\tau'} R_{t-\tau'}^2$$
+
+现在让我们定义 $\nu_t$ 为:
+
+$$\nu_t = \sum_{\tau'=1}^\infty \lambda^{\tau'} R_{t-\tau'+1}^2$$
+
+你会发现, 通过令 $\tau' \rightarrow \tau'-1$, 我们有:
+
+$$\nu_{t-1} = R_t^2 + \lambda \nu_t$$
+
+将这一结果代回第三步的方程, 我们得到:
+
+$$\sigma_t^2 = (1-\lambda)(R_t^2 + \lambda \nu_t)$$
+
+进一步展开并整理, 就能得到最终的递推式:
+
+$$\boxed{\sigma_t^2 = \lambda\sigma_{t+1}^2 + (1-\lambda)R_t^2}$$
+
+关键步骤是通过改变求和变量和下标, 将 $\nu_{t-1}$ 分解表示为当期回报率平方和滞后一期的 $\nu_t$ 的线性组合, 进而推导出两个波动率之间的递推关系。这利用了级数循环节性的性质。
 
 
 
+
+
+
+因为级数 $\sum \lambda^\tau$ 是等比级数, 和为 $\frac{1}{1-\lambda}$, 所以前项可化为 $\lambda \nu_t$。
+
+将这一表达式代回第三步, 得:
+
+$$\sigma_t^2 = (1-\lambda)(\lambda\nu_t + \lambda R_t^2)$$
+
+整理可得:
+$$\sigma_t^2 = \lambda(1-\lambda)\nu_t + \lambda(1-\lambda)R_t^2$$
+
+进一步整理为:
+$$\boxed{\sigma_t^2 = \lambda \sigma_{t+1}^2 + (1-\lambda)R_t^2}$$
 
 # Models
 ## Unit Root
