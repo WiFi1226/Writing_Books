@@ -98,66 +98,8 @@ $$
 $$
 
 
-这个简化过程可以分解为以下几个步骤:
-
-好的, 我来详细解释一下 RiskMetrics 模型公式的推导过程:
-
-RiskMetrics 模型最初的波动率公式是:
-
-$$
-\begin{align}
-\because\space\sigma_{t+1}^2 &= \\ 
-\therefore\space\sigma_{t}^2 &= (1-\lambda)\sum_{\tau=1}^\infty \lambda^{\tau-1} R_{t-\tau}^2\\
-&= (1-\lambda)[R_{t+1}^2+\sum_{\tau=2}^\infty \lambda^{\tau-1} R_{t+1-\tau}^2] \\
-&= (1-\lambda)[R_{t+1}^2+\sum_{\tau-2=0}^\infty \lambda^{\tau-2+1} R_{t+1-(\tau-2)-2}^2]
-\end{align}
-$$
 
 
----
-
-
-
-
-
-好的, 我来详细解释一下 RiskMetrics 模型公式的推导过程:
-
-RiskMetrics 模型最初的波动率公式是:
-
-$$\sigma_{t+1}^2 = (1-\lambda)\sum_{\tau=1}^\infty \lambda^{\tau-1} R_{t+1-\tau}^2 \tag{1}$$
-
-其中:
-- $\sigma_{t+1}^2$ 是时间 t+1 的条件方差 (波动率)预测值
-- $R_{t+1-\tau}$ 是落后 $\tau$ 期的回报率平方
-- $\lambda$ 是衰减因子, 满足 $0<\lambda<1$
-
-我们想将其化简为关于当期波动率和回报率平方的递归形式。
-
-第一步: 将求和部分单独提取出来, 设为:
-$$\nu_t = \sum_{\tau=1}^\infty \lambda^{\tau-1} R_{t-\tau+1}^2$$
-
-这实际上将当期及之前所有回报率的加权平均定义为 $\nu_t$。
-
-第二步: 将 $\nu_t$ 代入原方程:
-$$\sigma_{t+1}^2 = (1-\lambda)\nu_t$$
-
-第三步: 滞后一期, 得到:
-$$\sigma_t^2 = (1-\lambda)\nu_{t-1}$$
-
-第四步: 将 $\nu_{t-1}$ 展开表示为:
-$$\nu_{t-1}=\sum_{\tau=1}^\infty \lambda^{\tau-1} R_{t-\tau}^2 = \lambda \sum_{\tau=0}^\infty \lambda^{\tau} R_{t-\tau}^2 = \lambda \nu_t + \lambda R_t^2$$
-
-因为级数 $\sum \lambda^\tau$ 是等比级数, 和为 $\frac{1}{1-\lambda}$, 所以前项可化为 $\lambda \nu_t$。
-
-将这一表达式代回第三步, 得:
-
-$$\sigma_t^2 = (1-\lambda)(\lambda\nu_t + \lambda R_t^2)$$
-
-整理可得:
-$$\sigma_t^2 = \lambda(1-\lambda)\nu_t + \lambda(1-\lambda)R_t^2$$
-
-进一步整理为:
-$$\boxed{\sigma_t^2 = \lambda \sigma_{t+1}^2 + (1-\lambda)R_t^2}$$
 
 
 
