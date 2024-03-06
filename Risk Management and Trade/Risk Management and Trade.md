@@ -96,7 +96,33 @@ $$
 &\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space=(1-\lambda)R_{t}^2+\lambda\sigma_{t}^2\\
 \end{aligned}
 $$
+
+
+
+
+$$
+\begin{aligned}
+\sigma^2_{t+1} = \lambda[\lambda(\sigma^2_{t-1}) + (1 - \lambda)R^2_{t-1}] + (1 - \lambda)R^2_{t} &= (1 - \lambda)(R^2_{t} + \lambda R^2_{t-1}) + \lambda^2 \sigma^2_{t-1}\\
+&= (1 - \lambda)(R^2_{t} + \lambda R^2_{t-1} + \lambda^2 R^2_{t-2}) + \lambda^3 \sigma^2_{t-2}\\
+&= (1 - \lambda)(R^2_{t} + \lambda R^2_{t-1} + \lambda^2 R^2_{t-2} + \dots + \lambda^{m-1} R^2_{t-m}) + \lambda^m \sigma^2_{t-m}
+\end{aligned}
+$$
+
+
+
 ![[variance_estimate_evolution_correct_time_step.svg]]
+- ! 结合指令和结果附SVG图
+
+
+
+
+
+
+
+
+
+
+
 
 
 
