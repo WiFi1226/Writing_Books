@@ -188,3 +188,63 @@ $$\sum_{\tau=0}^{T_{total}-1}w_\tau R_{t-\tau}^2 = w_0 R_t^2 + (1-w_0)\sigma_t^2
 - 归一化形式: $\omega_0 = w_0$
 
 我应该在最初的推导时就清晰地解释 $\omega_0$ 是如何得到的, 这样不会显得太突兀。总之, 对于非归一化形式, $\omega_0$ 是通过将首项权重 $\tilde{w}_0$ 除以 $T_{total}$ 得到的; 对于归一化形式, $\omega_0$ 就直接等于归一化权重序列的首项 $w_0$。请让我知道如果还有任何不清楚的地方。
+
+
+----
+
+对于归一化权重序列 $\omega_\tau = \lambda(1-\lambda)^{\tau-1}$ 的情况, 我们来计算 $\omega_0$:
+
+首先确认该权重序列已经满足归一化条件:
+
+$$\sum_{\tau=0}^{\infty}\omega_\tau = \sum_{\tau=0}^{\infty}\lambda(1-\lambda)^{\tau-1} = 1$$
+
+因为这是一个等比数列求和, 根据公式:
+
+$$\sum_{\tau=0}^{\infty}ar^{\tau} = \frac{a}{1-r},\\quad |r|<1$$
+
+当 $a=\lambda, r=1-\lambda$ 时, 上式成立。
+
+所以对于给定的 $\omega_\tau = \lambda(1-\lambda)^{\tau-1}$, 它已经是一个归一化的权重序列。
+
+根据前面推导的归一化形式结果:
+
+$$\sum_{\tau=0}^{T_{total}-1}w_\tau R_{t-\tau}^2 = w_0 R_t^2 + (1-w_0)\sigma_t^2$$
+
+对于 $\omega_\tau = \lambda(1-\lambda)^{\tau-1}$ 这一特殊情况, 我们有:
+
+$$\boxed{\omega_0 = \lambda}$$
+
+也就是说, 对应的首项权重 $\omega_0$ 就等于 $\lambda$。
+
+这一结果与 GARCH (1,1)模型的参数形式是一致的, 如果进一步令:
+
+$$\alpha = \lambda, \beta = 1-\lambda, \omega=0$$
+则 GARCH (1,1)模型就成为该加权移动平均模型的一种特殊情况。
+
+因此, 对于归一化权重序列 $\omega_\tau = \lambda(1-\lambda)^{\tau-1}$, 其首项权重 $\omega_0$ 为 $\lambda$。
+
+
+----
+
+非常抱歉, 我的推导中似乎仍然存在一些错误, 让我再次仔细推导:
+
+给定权重序列 $\omega_\tau = \lambda(1-\lambda)^{\tau-1}$, 则有:
+
+$$\sum_{\tau=0}^{\infty}\omega_\tau R_{t-\tau}^2 = \sum_{\tau=0}^{\infty}\lambda(1-\lambda)^{\tau-1}R_{t-\tau}^2$$
+
+将求和展开:
+
+$$\begin{aligned}
+\sum_{\tau=0}^{\infty}\lambda(1-\lambda)^{\tau-1}R_{t-\tau}^2 &= \lambda R_t^2 + \lambda(1-\lambda)R_{t-1}^2 + \lambda(1-\lambda)^2R_{t-2}^2 + ... \\
+&= \lambda R_t^2 + (1-\lambda)\left(\lambda R_{t-1}^2 + \lambda(1-\lambda)R_{t-2}^2 + ...\right) \\
+&= \lambda R_t^2 + (1-\lambda)\left(\sum_{\tau=1}^{\infty}\lambda(1-\lambda)^{\tau-1}R_{t-\tau}^2\right) \\
+&= \lambda R_t^2 + (1-\lambda)\sigma_t^2
+\end{aligned}$$
+
+其中 $\sigma_t^2 = \sum_{\tau=1}^{\infty}\lambda(1-\lambda)^{\tau-1}R_{t-\tau}^2$。
+
+因此, 正确的结果应该是:
+
+$$\boxed{\sum_{\tau=0}^{\infty}\lambda(1-\lambda)^{\tau-1}R_{t-\tau}^2 = \lambda R_t^2 + (1-\lambda)\sigma_t^2}$$
+
+这与我之前的推导都有出入, 非常感谢您的反复指正, 让我重新审视推导过程。请继续指出任何错误, 我会虚心学习。数学推导的严谨性非常重要, 我会努力改正。再次感谢您的耐心指导!
