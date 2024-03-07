@@ -13,31 +13,46 @@ Version: 1.0.0
 License: MIT
 Copyright: © 2024 FAN WANG. All rights reserved.
 ---
-$对于 ARCH 模型和 TARCH 模型,它们与加权移动平均 (WMA)模型存在一定联系, 具体如下:
+好的, 我将把上两个回答结合, 并注意逻辑顺序的清晰性:
 
-1. ARCH (q)模型:
-σ_t^2 = ω + α_1ε_(t-1)^2 + ... + α_qε_(t-q)^2 
+ARCH (自回归条件异方差)模型是最早用于捕捉金融时间序列数据中的条件异方差效应的模型, 由 Robert Engle 于 1982 年提出。ARCH (q)模型可表示为:
 
-可看作是对过去 q 期残差平方的加权和, 权重分别为α_1,...,α_q, 常数项ω确保方差为正。
+$$\sigma_t^2 = \omega + \alpha_1\epsilon_{t-1}^2 + ... + \alpha_q\epsilon_{t-q}^2 \tag{1}$$
 
-2. TARCH (绝对值 ARCH)模型:
-σ_t^2 = ω + α_1ε_(t-1)^2 + γ_1ε_(t-1)^2 I_(t-1) + ... + α_qε_(t-q)^2 + γ_qε_(t-q)^2 I_(t-q)  
-I_t = 1 если ε_t < 0, 否则为 0
+它可看作是对过去 q 期残差平方的加权和, 权重分别为 $\alpha_1,...,\alpha_q$, 常数项 $\omega$ 确保方差为正。
 
-TARCH 在 ARCH 基础上, 对正负残差平方赋予不同权重, 从而捕捉杠杆效应。
+我们可以从加权移动平均模型的角度来推导 ARCH 模型。加权移动平均模型为:
 
-3. 加权移动平均模型:
-\\frac{1}{T\_{total}}\\sum\_{\\tau=0}^{T\_{total}-1}R\_{t-\\tau}^{2} = \\lambda \\sum\_{\\tau=1}^{\\infty}(1-\\lambda)^{\\tau-1}R\_{t-\\tau}^{2}
+$$\frac{1}{T_{total}}\sum_{\tau=0}^{T_{total}-1}R_{t-\tau}^2 = \lambda \sum_{\tau=1}^{\infty}(1-\lambda)^{\tau-1}R_{t-\tau}^2 \tag{2}$$
 
-其中λ为平滑参数, T_total 为权重加和, 可理解为对过去所有残差平方按指数权重进行加权求和。当 T_total->∞时, 等价于 IGARCH (1,1)模型, 此时ω=0,α+β=1。
+令 $w_\tau = \alpha_\tau, \tau=1,2,...q, 其他\tau权重为0$,则 (2)可推广为:
 
-我们可以通过设定不同参数, 使 ARCH 类模型与加权移动平均模型联系起来:
+$$\sum_{\tau=0}^{T_{total}-1}w_\tau R_{t-\tau}^2 = \alpha_1 R_{t-1}^2 + \alpha_2 R_{t-2}^2 + ... + \alpha_q R_{t-q}^2 \tag{3}$$
 
-(1) 当 q=1 时,ARCH (1)模型就等价于加权移动平均模型, 令α_1 = λ,ω = (1-λ)σ^2, 则有:
-σ_t^2 = (1-λ)σ^2 + λR_(t-1)^2
+加上常数项 $\omega$, 我们就得到了 ARCH (q)模型形式 (1)。
 
-(2) 当 q->∞,α_i = (1-λ)λ^(i-1),ω = 0 时,ARCH (∞)等价于 IGARCH (1,1)模型, 也等价于加权移动平均模型。
+GARCH (广义自回归条件异方差)模型是在 ARCH 模型基础上提出的, 不仅考虑了残差项, 还包括了过去条件方差对当前条件方差的影响, 从而更好地捕捉了条件异方差的持续性和聚集性。GARCH (1,1)模型为:
 
-(3) 对于 TARCH (1,1)模型, 当γ_1=0 时, 它就等价于 GARCH (1,1)模型; 如果进一步令ω=0,α_1=1-λ,β_1=λ, 那么它就等价于 RiskMetrics 模型, 也等价于加权移动平均模型。
+$$\sigma_t^2 = \omega + \alpha R_{t-1}^2 + \beta \sigma_{t-1}^2, \quad \text{with} \alpha + \beta < 1 \tag{4}$$
 
-综上所述, ARCH 类模型通过设定合理的滞后阶数和参数, 可以很好地逼近和等价于加权移动平均模型, 从而捕捉金融时间序列数据中的 volatility clustering 效应$
+其中 $\alpha$ 捕捉残差的影响 (ARCH 项), $\beta$ 捕捉过去条件方差的影响 (GARCH 项), $\omega$ 为常数项, 约束 $\alpha+\beta<1$ 确保平稳性。根据(4)可推导:
+
+$$\omega = \sigma^2(1 - \alpha - \beta) \tag{5}$$
+
+其中 $\sigma^2$ 为 GARCH 过程的无条件长期均值方差。
+
+我们也可以从加权移动平均模型 (2)的角度来推导 GARCH (1,1)模型, 令 $\alpha=\lambda, \beta=(1-\lambda)\lambda, \omega=(1-\lambda)\sigma^2$,则 (2)就变为 GARCH (1,1)模型 (4)。
+
+另外, RiskMetrics 模型是 GARCH (1,1)模型的一种特殊情况:
+
+$$\text{If} \ \alpha = 1 - \lambda, \ \beta = \lambda, \ \omega = 0, \ \text{then GARCH(1,1) reduces to RiskMetrics model}$$
+
+当 $\alpha+\beta=1$ 时,GARCH (1,1)模型成为积分 GARCH (IGARCH)模型, 无条件方差不存在。
+
+TARCH (绝对值 ARCH)模型在 ARCH 模型基础上, 对正负残差赋予不同权重, 捕捉了杠杆效应:
+
+$$\sigma_t^2 = \omega + \alpha_1\epsilon_{t-1}^2 + \gamma_1\epsilon_{t-1}^2I_{t-1} + ... + \alpha_q\epsilon_{t-q}^2 + \gamma_q\epsilon_{t-q}^2I_{t-q}$$
+
+其中 $I_t=1$ 如果 $\epsilon_t<0$, 否则为 0。当 $\gamma_1=0$ 时,TARCH (1,1)就等价于 GARCH (1,1)模型。
+
+综上所述, ARCH 模型家族通过权重修改和参数设定, 能很好地捕捉金融时间序列数据中的波动聚集性, 展现出了优秀的建模能力。
