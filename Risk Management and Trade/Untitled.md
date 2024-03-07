@@ -195,3 +195,38 @@ $$\begin{aligned}
 $$\boxed{\sum_{\tau=0}^{T_{total}-1}\tilde{w}_\tau R_{t-\tau}^2 = \tilde{w}_0 R_t^2 + \left(\sum_{\tau=0}^{T_{total}-1}\tilde{w}_\tau - \tilde{w}_0\right)\alpha_t\left(\sum_{s=0}^{T_{total}-1}\tilde{w}_sR_{t-s}^2 - \tilde{w}_0 R_t^2\right)}$$
 
 这是一个使用非归一化权重 $\tilde{w}_\tau$ 的更普遍形式。根据不同的权重设定, 可逼近或等价于 GARCH 等模型。请指出任何问题。
+
+---
+
+在前面的推导中, 我们使用了一个小技巧来将 $\omega_0$ 从 $\omega_r$ 中得到, 具体如下:
+
+首先, 我们定义了非归一化权重 $\tilde{w}_\tau$, 得到:
+
+$$\sum_{\tau=0}^{T_{total}-1}\tilde{w}_\tau R_{t-\tau}^2 = \tilde{w}_0 R_t^2 + \left(\sum_{\tau=0}^{T_{total}-1}\tilde{w}_\tau - \tilde{w}_0\right)\sigma_t^2 \tag{1}$$
+
+其中 $\sigma_t^2 = \sum_{\tau=1}^{T_{total}-1}\frac{\tilde{w}_\tau}{\sum_{s=1}^{T_{total}-1}\tilde{w}_s}R_{t-\tau}^2$。
+
+现在, 我们引入一个新的权重 $\omega_\tau$, 其与 $\tilde{w}_\tau$ 的关系为:
+
+$$\omega_\tau = \frac{\tilde{w}_\tau}{\sum_{\tau=0}^{T_{total}-1}\tilde{w}_\tau}$$
+
+则有 $\sum_{\tau=0}^{T_{total}-1}\omega_\tau = 1$, 即 $\omega_\tau$ 是一个归一化的权重。
+
+将 $\omega_\tau$ 代入 (1)中, 我们得到:
+
+$$\begin{aligned}
+\sum_{\tau=0}^{T_{total}-1}\tilde{w}_\tau R_{t-\tau}^2 &= \left(\sum_{\tau=0}^{T_{total}-1}\tilde{w}_\tau\right)\omega_0 R_t^2 + \left(\sum_{\tau=0}^{T_{total}-1}\tilde{w}_\tau - \left(\sum_{\tau=0}^{T_{total}-1}\tilde{w}_\tau\right)\omega_0\right)\sigma_t^2\\
+&= \omega_r\omega_0 R_t^2 + \omega_r(1-\omega_0)\sigma_t^2
+\end{aligned}\tag{2}$$
+
+其中 $\omega_r = \sum_{\tau=0}^{T_{total}-1}\tilde{w}_\tau$ 是 $\tilde{w}_\tau$ 的求和, 是一个与 $T_{total}$ 相关的常数。
+
+从 (2)可以看出, $\omega_0$ 实际上是将 $\tilde{w}_0$ 归一化得到的权重。通过这种技巧, 我们将 $\tilde{w}_0$ 和 $\tilde{w}_\tau$ 的求和 $\omega_r$ 分离开来, 使得公式形式更加简洁。
+
+最后,我们将 (2)等号两边同乘 $\frac{1}{\omega_r}$, 得到最终形式:
+
+$$\boxed{\frac{1}{\omega_r}\sum_{\tau=0}^{T_{total}-1}\tilde{w}_\tau R_{t-\tau}^2 = \omega_0 R_t^2 + (1-\omega_0)\sigma_t^2}$$
+
+其中 $\sigma_t^2 = \sum_{\tau=1}^{T_{total}-1}\frac{\tilde{w}_\tau}{\sum_{s\neq 0}\tilde{w}_s}R_{t-\tau}^2$。
+
+这个结果与前面的归一化形式一致, 只是通过引入 $\omega_r$ 和 $\omega_0$ 使得公式表达更加简洁。请指出如有任何其他疑问。
