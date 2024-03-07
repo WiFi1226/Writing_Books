@@ -75,12 +75,16 @@ Since $\sigma_{R_{t+1}}$ (i.e. the volatility of returns) is the main objective 
 $$
 \begin{aligned} 
 \sigma_{R_{t+1}} &\xlongequal{\text{common definition of  return}}  E[R_{t+1} - E(R_{t+1})]^2= \frac{1}{T_{\text{total}}} \sum_{\tau=0}^{T_{\text{total}}-1} (R_{t-\tau} - \mu_{R_{t+1}})^2\\
-&\xlongequal{\text{simple weighted average model}}\frac{1}{T_{total}}\sum_{\tau=0}^{T_{total}-1}R_{t-\tau}^{2},\space (s.t.\space \mu_{R_{t+1}}=0,\space\text{Includes current period})\\
-\\ 
+&\xlongequal{\text{conversion of length of time}}\sigma_{\text{daily}} \times \sqrt{\tau}\\
 &\xlongequal{\text{Covariance rate - usually denotes the mathematical definition of a single day's return}} \sigma_{t+1}^2 \\ 
-&\xlongequal{\text{conversion of length of time}}\sigma_{\text{daily}} \times \sqrt{\tau}
+\\
+&\xlongequal{\text{simple weighted average model}}\frac{1}{T_{total}}\sum_{\tau=0}^{T_{total}-1}R_{t-\tau}^{2},\space (s.t.\space \mu_{R_{t+1}}=0,\space\text{Includes current period})\\
+
+
 \end{aligned}
 $$
+
+
 ### RiskMetrics model
 $$
 \begin{aligned}
