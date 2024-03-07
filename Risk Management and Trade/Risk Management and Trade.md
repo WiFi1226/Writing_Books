@@ -74,18 +74,17 @@ Since $\sigma_{R_{t+1}}$ (i.e. the volatility of returns) is the main objective 
 - ? 对于跳期的分析必要？
 $$
 \begin{aligned} 
-\sigma_{R_{t+1}} &\xlongequal{\text{common definition of  return}}  E[R_{t+1} - E(R_{t+1})]^2= \frac{1}{T_{\text{total}}} \sum_{\tau=0}^{T_{\text{total}}-1} (R_{t-\tau} - \mu_{R_{t+1}})^2
+\sigma_{R_{t+1}} &\xlongequal{\text{common definition of  return}}  E[R_{t+1} - E(R_{t+1})]^2= \frac{1}{T_{\text{total}}} \sum_{\tau=0}^{T_{\text{total}}-1} (R_{t-\tau} - \mu_{R_{t+1}})^2\\
+&\xlongequal{\text{simple weighted average model}}\frac{1}{T_{total}}\sum_{\tau=0}^{T_{total}-1}R_{t-\tau}^{2},\space (s.t.\space \mu_{R_{t+1}}=0,\space\text{Includes current period})\\
 \\ 
 &\xlongequal{\text{Covariance rate - usually denotes the mathematical definition of a single day's return}} \sigma_{t+1}^2 \\ 
 &\xlongequal{\text{conversion of length of time}}\sigma_{\text{daily}} \times \sqrt{\tau}
 \end{aligned}
 $$
-
-Therefore, we have (Simple models treated as equivalent weights) 
+### RiskMetrics model
 $$
 \begin{aligned}
-\sigma_{R_{t+1}} =\sigma^2_{t+1}&= \frac{1}{T_{total}}\sum_{\tau=0}^{T_{total}-1}(R_{t-\tau} - \mu_{R_{t+1}})^2\\
-&\xlongequal{\text{simple weighted average model}}\frac{1}{T_{total}}\sum_{\tau=0}^{T_{total}-1}R_{t-\tau}^{2},\space (s.t.\space \mu_{R_{t+1}}=0,\space\text{Includes current period})\\
+\sigma_{R_{t+1}} =\sigma^2_{t+1}&= \frac{1}{T_{total}}\sum_{\tau=0}^{T_{total}-1}(R_{t-\tau} - \mu_{R_{t+1}})^2=\frac{1}{T_{total}}\sum_{\tau=0}^{T_{total}-1}R_{t-\tau}^{2},\space (s.t.\space \mu_{R_{t+1}}=0,\space\text{Includes current period})\\
 &\xlongequal{\text{RiskMetrics model}}(1-\lambda)\sum_{\tau=0}^\infty\lambda^{\tau} R_{t-\tau}^2,\space(s.t.\space(1-\lambda)\times\sum_{\tau=0}^{\infty}\lambda^{\tau}=(1-\lambda)\times \frac{1}{1-\lambda}=1)\\
 &\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space=(1-\lambda)\sum_{\tau-1=0}^\infty\lambda^{\tau-1} R_{t-(\tau-1)}^2\\
 &\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space=(1-\lambda)[R_{t}^2+\sum_{\tau=2}^{\infty} \lambda^{\tau-1} R_{t-(\tau-1)}^2]\\
@@ -93,20 +92,16 @@ $$
 &\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space=(1-\lambda)[R_{t}^2+\sum_{\tau'=0}^{\infty} \lambda^{\tau'+1} R_{(t-1)-\tau'}^2]\\
 &\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space=(1-\lambda)[R_{t}^2+\lambda\sum_{\tau'=0}^{\infty} \lambda^{\tau'} R_{(t-1)-\tau'}^2]\\
 &\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space=(1-\lambda)R_{t}^2+\lambda(1-\lambda)\sum_{\tau'=0}^{\infty} \lambda^{\tau'} R_{(t-1)-\tau'}^2\\
-&\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space=(1-\lambda)R_{t}^2+\lambda\sigma_{t}^2\\
+&\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space=\boxed{(1-\lambda)R_{t}^2+\lambda\sigma_{t}^2}\\
+\\
+&\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space= \lambda[\lambda(\sigma^2_{t-1}) + (1 - \lambda)R^2_{t-1}] + (1 - \lambda)R^2_{t} \\
+&\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space= (1 - \lambda)(R^2_{t} + \lambda R^2_{t-1}) + \lambda^2 \sigma^2_{t-1}\\
+&\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space= (1 - \lambda)(R^2_{t} + \lambda R^2_{t-1} + \lambda^2 R^2_{t-2}) + \lambda^3 \sigma^2_{t-2}\\
+&\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space= (1 - \lambda)(R^2_{t} + \lambda R^2_{t-1} + \lambda^2 R^2_{t-2} + \dots + \lambda^{m-1} R^2_{t-m}) + \lambda^m \sigma^2_{t-m}
 \end{aligned}
 $$
 
 
-
-
-$$
-\begin{aligned}
-\sigma^2_{t+1} = \lambda[\lambda(\sigma^2_{t-1}) + (1 - \lambda)R^2_{t-1}] + (1 - \lambda)R^2_{t} &= (1 - \lambda)(R^2_{t} + \lambda R^2_{t-1}) + \lambda^2 \sigma^2_{t-1}\\
-&= (1 - \lambda)(R^2_{t} + \lambda R^2_{t-1} + \lambda^2 R^2_{t-2}) + \lambda^3 \sigma^2_{t-2}\\
-&= (1 - \lambda)(R^2_{t} + \lambda R^2_{t-1} + \lambda^2 R^2_{t-2} + \dots + \lambda^{m-1} R^2_{t-m}) + \lambda^m \sigma^2_{t-m}
-\end{aligned}
-$$
 
 
 
