@@ -100,18 +100,16 @@ $$
 &\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space= (1 - \lambda)(R^2_{t} + \lambda R^2_{t-1} + \lambda^2 R^2_{t-2} + \dots + \lambda^{m-1} R^2_{t-m}) + \lambda^m \sigma^2_{t-m}
 \end{aligned}
 $$
+#### Dominance
 1. $\sigma^2_{t-\tau} \propto \frac{1}{\lambda}$ ($\lambda < 1,\space\lambda^m <1$)
 2. Contains only one unknown argument: $\lambda$
 3. Requires very little data storage. It is only necessary to remember the current estimate of the variance rate and the most recent observation of the market variable value. Old estimates of the variance rate and old market variable values can be discarded.
 4. High λ values (close to 1.0) produce daily volatility estimates that are relatively slow ( $1-\lambda$ ) to respond to new information ( $R_{t}^2$ ) provided by daily variation.
-5. When $\lambda = 0.94$, daily variance forecasts can be made without estimation. (The weight of today's squared returns isn $1 - \lambda = 0.06$ and the $\omega_{\sigma^2_{t-100}}$ index decays to $$ (1 - λ)λ99 = 0.000131 . The $\sum_{0}^{99} \omega$ is 0.998, i.e. it contains 99.8% of the weights. Thus only about 100 daily return lags need to be stored .
-
-
-
-
-
+5. When $\lambda = 0.94$, daily variance forecasts can be made without estimation. (The weight of today's squared returns isn $1 - \lambda = 0.06$ and the $\omega_{\sigma^2_{t-100}}$ index decays to $(1 - λ)λ99 = 0.000131$. The $\sum_{0}^{99} \omega$ is 0.998, i.e. it contains 99.8% of the weights. Thus only about 100 daily return lags need to be stored .
 ![[variance_estimate_evolution_correct_time_step.svg]]
 - ! 结合指令和结果附SVG图
+
+
 
 
 
