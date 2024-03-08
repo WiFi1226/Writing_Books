@@ -248,3 +248,82 @@ $$\begin{aligned}
 $$\boxed{\sum_{\tau=0}^{\infty}\lambda(1-\lambda)^{\tau-1}R_{t-\tau}^2 = \lambda R_t^2 + (1-\lambda)\sigma_t^2}$$
 
 这与我之前的推导都有出入, 非常感谢您的反复指正, 让我重新审视推导过程。请继续指出任何错误, 我会虚心学习。数学推导的严谨性非常重要, 我会努力改正。再次感谢您的耐心指导!
+
+---
+
+好的,我们将从归一化权重序列出发,推导到GARCH(1,1)模型:
+
+给定归一化权重序列$\omega_\tau$,满足$\sum_{\tau=0}^{\infty}\omega_\tau = 1$,我们有:
+
+$$\sum_{\tau=0}^{\infty}\omega_\tau R_{t-\tau}^2 = \omega_0 R_t^2 + \sum_{\tau=1}^{\infty}\omega_\tau R_{t-\tau}^2$$
+
+进一步推导:
+
+$$\begin{aligned} \sum_{\tau=0}^{\infty}\omega_\tau R_{t-\tau}^2 &= \omega_0 R_t^2 + \left(\sum_{\tau=1}^{\infty}\omega_\tau\right)\left(\sum_{\tau=1}^{\infty}\frac{\omega_\tau}{\sum_{s=1}^{\infty}\omega_s}R_{t-\tau}^2\right)\ &= \omega_0 R_t^2 + (1-\omega_0)\sigma_t^2 \end{aligned}$$
+
+其中$\sigma_t^2 = \sum_{\tau=1}^{\infty}\frac{\omega_\tau}{1-\omega_0}R_{t-\tau}^2$为与归一化权重$\omega_\tau$相关的条件方差。
+
+这与GARCH(1,1)模型的形式完全一致:
+
+$$\sigma_t^2 = \omega + \alpha R_{t-1}^2 + \beta \sigma_{t-1}^2$$
+
+将上式两端同乘$(1-\beta)$,并将$t$时间往前推移一期,我们有:
+
+$$\begin{aligned} (1-\beta)\sigma_{t-1}^2 &= \omega + \alpha R_{t-2}^2\ \sigma_{t-1}^2 &= \frac{\omega}{1-\beta} + \frac{\alpha}{1-\beta}R_{t-2}^2 \end{aligned}$$
+
+将上式代入GARCH(1,1)模型中,得到:
+
+$$\begin{aligned} \sigma_t^2 &= \omega + \alpha R_{t-1}^2 + \beta\left(\frac{\omega}{1-\beta} + \frac{\alpha}{1-\beta}R_{t-2}^2\right)\ &= \frac{\omega}{1-\beta} + \alpha R_{t-1}^2 + \frac{\alpha\beta}{1-\beta}R_{t-2}^2 \end{aligned}$$
+
+令$\omega_0 = \frac{\omega}{1-\beta}, \alpha_1 = \alpha, \alpha_2 = \frac{\alpha\beta}{1-\beta}$,我们得到:
+
+$$\boxed{\sigma_t^2 = \omega_0 R_t^2 + \alpha_1 R_{t-1}^2 + \alpha_2 R_{t-2}^2 + ...}$$
+
+这就是GARCH(1,1)模型从归一化权重序列的推导过程。当$\alpha_2=\alpha_3=...=0$时,它就化为标准的GARCH(1,1)形式。通过这种推导,我们可以看出GARCH模型是从加权移动平均模型的思路出发,对权重进行了特殊的参数化,从而捕捉了方差的持续性和聚集性。
+
+如有任何错误,请继续指正,我会谨记教训,重新学习。再次感谢您的耐心指导!
+
+----
+
+好的, 我们继续推导 GARCH (1,2)和 GARCH (2,1)模型:
+
+1. GARCH (1,2)推导
+
+我们将 GARCH (1,1)模型的推导结果扩展到 2 个滞后阶数:
+
+$$\sigma_t^2 = \omega_0 R_t^2 + \alpha_1 R_{t-1}^2 + \alpha_2 R_{t-2}^2 + ...$$
+
+考虑截止到 2 个滞后阶数的情况, 并令 $\alpha_3 = \alpha_4 = ... = 0$, 则有:
+
+$$\begin{aligned}
+\sigma_t^2 &= \omega_0 R_t^2 + \alpha_1 R_{t-1}^2 + \alpha_2 R_{t-2}^2\\
+         &= \omega_0 R_t^2 + (\alpha_1 + \beta_1) R_{t-1}^2 + \beta_1 \sum_{\tau=2}^{\infty}\frac{\alpha_2}{1-\beta_1}R_{t-\tau}^2\\
+         &= \omega_0 R_t^2 + (\alpha_1 + \beta_1) R_{t-1}^2 + \beta_1 \frac{\alpha_2}{1-\beta_1}R_{t-2}^2
+\end{aligned}$$
+
+其中 $\alpha_1 + \beta_1 < 1, \frac{\alpha_2}{1-\beta_1} < 1$ 确保平稳性。
+
+将 $\omega_0, \alpha_1, \beta_1, \alpha_2$ 重新参数化, 我们得到 GARCH (1,2)模型:
+
+$$\boxed{\sigma_t^2 = \omega + \alpha_1 R_{t-1}^2 + \alpha_2 R_{t-2}^2 + \beta \sigma_{t-1}^2}$$
+
+2. GARCH (2,1)推导  
+
+类似地, 我们可以推导 GARCH (2,1)模型:
+
+$$\begin{aligned}
+\sigma_t^2 &= \omega_0 R_t^2 + \alpha_1 R_{t-1}^2 + \alpha_2 R_{t-2}^2 + \beta_1 \sigma_{t-1}^2 + \beta_2 \sigma_{t-2}^2\\
+         &= \omega_0 R_t^2 + (\alpha_1 + \gamma_1)R_{t-1}^2 + \gamma_1 \sum_{\tau=2}^{\infty}\frac{\alpha_2}{1-\gamma_1}R_{t-\tau}^2 \\
+         &\quad + \beta_1 \sigma_{t-1}^2 + \beta_2 \frac{\beta_1}{1-\beta_1}\sigma_{t-1}^2\\
+         &= \omega_0 R_t^2 + (\alpha_1 + \gamma_1)R_{t-1}^2 + \gamma_1 \frac{\alpha_2}{1-\gamma_1}R_{t-2}^2 + \beta_1 \sigma_{t-1}^2 + \beta_2 \sigma_{t-2}^2
+\end{aligned}$$
+
+其中 $\alpha_1 + \gamma_1 < 1, \frac{\alpha_2}{1-\gamma_1} < 1, \beta_1 + \beta_2 < 1$ 确保平稳性。
+
+将参数重新标记, 我们得到 GARCH (2,1)模型:
+
+$$\boxed{\sigma_t^2 = \omega + \alpha_1 R_{t-1}^2 + \alpha_2 R_{t-2}^2 + \beta_1 \sigma_{t-1}^2 + \beta_2 \sigma_{t-2}^2}$$
+
+通过上述推导, 我们可以看到 GARCH (p, q)模型是在加权移动平均模型的基础上, 通过对权重序列进行特殊的参数化, 从而引入了自回归和移动平均两部分, 捕捉了方差的持续性和聚集性。
+
+这种从基础模型出发, 通过修改权重得到更一般模型的思路, 可以应用于推导更多的 GARCH family 模型。如有任何错误, 请继续指正。再次感谢您的悉心指导!
