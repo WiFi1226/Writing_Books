@@ -329,120 +329,51 @@ $$\boxed{\sigma_t^2 = \omega + \alpha_1 R_{t-1}^2 + \alpha_2 R_{t-2}^2 + \beta_1
 这种从基础模型出发, 通过修改权重得到更一般模型的思路, 可以应用于推导更多的 GARCH family 模型。如有任何错误, 请继续指正。再次感谢您的悉心指导!
 
 ----
+好的, 我重新推导 $\sigma_{t+1}^2$ 的 ARCH、GARCH (1,1)、GARCH (1,2)和 GARCH (2,1)展开式, 结果参数只包含 $\omega$:
 
-非常感谢您的提示和指导, 让我重新审视对 GARCH (1,2)和 GARCH (2,1)模型参数的推导。
+1. ARCH (q)模型:
 
-根据您所说, 对于 GARCH (1,1)模型, 我们有:
-$$\alpha = \omega_0, \beta = 1-\omega_0$$
+$$\sigma_{t+1}^2 = \omega + \sum_{i=1}^{q}\omega(1-\omega)^{i-1}\epsilon_{t+1-i}^2$$
 
-那么对于 GARCH (1,2)和 GARCH (2,1)模型, 参数与权重序列 $\omega_\tau$ 之间的关系如下:
+2. GARCH (1,1)模型:
 
-1. GARCH (1,2)模型: 
-$$\sigma_t^2 = \omega + \alpha_1 R_{t-1}^2 + \alpha_2 R_{t-2}^2 + \beta \sigma_{t-1}^2$$
+$$\begin{aligned}
+\sigma_{t+1}^2 &= \omega + \alpha\epsilon_t^2 + \beta\sigma_t^2\\
+&= \omega + \alpha\epsilon_t^2 + \alpha\beta\epsilon_{t-1}^2 + \alpha\beta^2\epsilon_{t-2}^2 + ...\\
+&= \omega + \alpha\sum_{i=0}^{\infty}\beta^i\epsilon_{t-i}^2
+\end{aligned}$$
 
-(a) 非归一化权重推导:
-$$\begin{cases}
-\alpha_1 = \frac{\tilde{\omega}_1}{T_{total}}\\
-\alpha_2 = \frac{\tilde{\omega}_2}{T_{total}(1-\frac{\tilde{\omega}_1}{T_{total}})}\\
-\beta = 1-\frac{\tilde{\omega}_1}{T_{total}}\\
-\omega = (1-\alpha_1-\beta)\sigma^2
-\end{cases}$$
+令 $\alpha = \omega, \beta = 1-\omega$, 我们得到 GARCH (1,1)展开式:
 
-(b) 归一化权重推导: 
-$$\begin{cases}
-\alpha_1 = \omega_1\\  
-\alpha_2 = \frac{\omega_2}{1-\omega_1}\\
-\beta = 1-\omega_1\\
-\omega = (1-\alpha_1-\beta)\sigma^2
-\end{cases}$$
+$$\boxed{\sigma_{t+1}^2 = \omega + \omega\sum_{i=0}^{\infty}(1-\omega)^i\epsilon_{t-i}^2}$$
 
-2. GARCH (2,1)模型:
-$$\sigma_t^2 = \omega + \alpha_1 R_{t-1}^2 + \alpha_2 R_{t-2}^2 + \beta_1 \sigma_{t-1}^2 + \beta_2 \sigma_{t-2}^2$$  
+3. GARCH (1,2)模型:
 
-(a) 非归一化权重推导:
-$$\begin{cases}
-\alpha_1 = \frac{\tilde{\omega}_1}{T_{total}}\\
-\alpha_2 = \frac{\tilde{\omega}_2}{T_{total}(1-\frac{\tilde{\omega}_1}{T_{total}})}\\  
-\beta_1 = \frac{\tilde{\omega}_1}{T_{total}}\\
-\beta_2 = \frac{\tilde{\omega}_2}{T_{total}(1-\frac{\tilde{\omega}_1}{T_{total}})}\\
-\omega = \left(1-\frac{\tilde{\omega}_1}{T_{total}}-\frac{\tilde{\omega}_2}{T_{total}(1-\frac{\tilde{\omega}_1}{T_{total}})}\right)\sigma^2  
-\end{cases}$$
+$$\begin{aligned}
+\sigma_{t+1}^2 &= \omega + \alpha_1\epsilon_t^2 + \alpha_2\epsilon_{t-1}^2 + \beta\sigma_{t-1}^2\\
+&= \omega + \alpha_1\epsilon_t^2 + \alpha_2\epsilon_{t-1}^2 + \alpha_1\beta\epsilon_{t-2}^2 + \alpha_2\beta\epsilon_{t-3}^2 + ...\\
+&= \omega + \alpha_1\sum_{i=0}^{\infty}\beta^i\epsilon_{t-2i}^2 + \alpha_2\sum_{i=0}^{\infty}\beta^i\epsilon_{t-2i-1}^2
+\end{aligned}$$
 
-(b) 归一化权重推导:
-$$\begin{cases}
-\alpha_1 = \omega_1\\
-\alpha_2 = \frac{\omega_2}{1-\omega_1}\\
-\beta_1 = \omega_1\\  
-\beta_2 = \frac{\omega_2}{1-\omega_1}\\
-\omega = (1-\omega_1-\frac{\omega_2}{1-\omega_1})\sigma^2
-\end{cases}$$
+令 $\alpha_1 = \omega^2, \alpha_2 = \omega(1-\omega), \beta = (1-\omega)^2$, 我们得到 GARCH (1,2)展开式:
 
-其中 $\tilde{\omega}_i$ 为非归一化权重, $\omega_i$ 为归一化权重, $\sigma^2$ 为无条件方差。
+$$\boxed{\sigma_{t+1}^2 = \omega + \omega^2\sum_{i=0}^{\infty}(1-\omega)^{2i}\epsilon_{t-2i}^2 + \omega(1-\omega)\sum_{i=0}^{\infty}(1-\omega)^{2i}\epsilon_{t-2i-1}^2}$$
 
-通过上述推导, 我们可以清楚地看到 GARCH 模型参数 $\alpha_i,\beta_j$ 是如何与权重序列 $\tilde{\omega}_i,\omega_i$ 对应的。这种从加权移动平均模型推导 GARCH 模型的思路, 为我们提供了一种新的理解和建模的视角。
+4. GARCH (2,1)模型:
 
-如有任何错误, 还请不吝赐教。再次感谢您的耐心指导!
+$$\begin{aligned}
+\sigma_{t+1}^2 &= \omega + \alpha_1\epsilon_t^2 + \alpha_2\epsilon_{t-1}^2 + \beta_1\sigma_t^2 + \beta_2\sigma_{t-1}^2\\
+&= \omega + \alpha_1\epsilon_t^2 + (\alpha_2+\alpha_1\beta_1)\epsilon_{t-1}^2 + (\alpha_1\beta_2+\alpha_2\beta_1)\epsilon_{t-2}^2 \\
+&\quad + \alpha_2\beta_2\epsilon_{t-3}^2 + ...\\
+&= \omega + \alpha_1\sum_{i=0}^{\infty}\left(\beta_1^i\epsilon_{t-i}^2+\beta_2^i\epsilon_{t-i-1}^2\right) \\
+&\quad + \alpha_2\sum_{i=0}^{\infty}\left(\beta_1^i\epsilon_{t-i-1}^2+\beta_2^i\epsilon_{t-i-2}^2\right)
+\end{aligned}$$
 
----
+令 $\alpha_1 = \omega^2, \alpha_2 = \omega(1-\omega), \beta_1 = \omega(1-\omega), \beta_2 = (1-\omega)^2$, 我们得到 GARCH (2,1)展开式:
 
-好的, 我将给出具体的推导过程:
+$$\boxed{\begin{aligned}
+\sigma_{t+1}^2 = \omega &+ \omega^2\sum_{i=0}^{\infty}\left((\omega(1-\omega))^i\epsilon_{t-i}^2+((1-\omega)^2)^i\epsilon_{t-i-1}^2\right)\\
+&+ \omega(1-\omega)\sum_{i=0}^{\infty}\left((\omega(1-\omega))^i\epsilon_{t-i-1}^2+((1-\omega)^2)^i\epsilon_{t-i-2}^2\right)
+\end{aligned}}$$
 
-1. GARCH (1,2)模型推导
-
-(a) 非归一化权重推导:
-
-已知:
-$$\sum_{\tau=0}^{T_{total}-1}\frac{\tilde{w}_\tau}{T_{total}}R_{t-\tau}^2 = \frac{\tilde{w}_0}{T_{total}}R_t^2 + \left(1-\frac{\tilde{w}_0}{T_{total}}\right)\sigma_t^2$$
-其中 $\sigma_t^2 = \sum_{\tau=1}^{T_{total}-1}\frac{\tilde{w}_\tau}{\sum_{s=1}^{T_{total}-1}\tilde{w}_s}R_{t-\tau}^2$
-
-令 $\alpha_1 = \frac{\tilde{w}_1}{T_{total}}$, 则:
-$$\sigma_t^2 = \frac{\tilde{w}_1}{T_{total}}R_{t-1}^2 + \left(1-\frac{\tilde{w}_1}{T_{total}}\right)\left(\sum_{\tau=2}^{T_{total}-1}\frac{\tilde{w}_\tau}{\sum_{s=2}^{T_{total}-1}\tilde{w}_s}R_{t-\tau}^2\right)$$
-
-令 $\alpha_2 = \frac{\tilde{w}_2}{T_{total}(1-\frac{\tilde{w}_1}{T_{total}})}$, $\beta = 1-\frac{\tilde{w}_1}{T_{total}}$, 则:
-
-$$\sigma_t^2 = \frac{\tilde{w}_1}{T_{total}}R_{t-1}^2 + \frac{\tilde{w}_2}{T_{total}(1-\frac{\tilde{w}_1}{T_{total}})}R_{t-2}^2 + \left(1-\frac{\tilde{w}_1}{T_{total}}\right)\sigma_{t-1}^2$$
-
-定义 $\omega = (1-\alpha_1-\beta)\sigma^2$, 我们得到 GARCH (1,2)模型的非归一化权重形式:
-
-$$\sigma_t^2 = \omega + \alpha_1 R_{t-1}^2 + \alpha_2 R_{t-2}^2 + \beta \sigma_{t-1}^2$$
-
-(b) 归一化权重推导:
-
-已知:
-$$\sum_{\tau=0}^{T_{total}-1}w_\tau R_{t-\tau}^2 = w_0 R_t^2 + (1-w_0)\sigma_t^2$$
-其中 $\sigma_t^2 = \sum_{\tau=1}^{T_{total}-1}\frac{w_\tau}{1-w_0}R_{t-\tau}^2$
-
-令 $\alpha_1 = w_1$, 则:
-$$\sigma_t^2 = w_1 R_{t-1}^2 + (1-w_1)\left(\sum_{\tau=2}^{T_{total}-1}\frac{w_\tau}{1-w_1}R_{t-\tau}^2\right)$$
-
-令 $\alpha_2 = \frac{w_2}{1-w_1}$, $\beta = 1-w_1$, 则:
-
-$$\sigma_t^2 = w_1 R_{t-1}^2 + \frac{w_2}{1-w_1}R_{t-2}^2 + (1-w_1)\sigma_{t-1}^2$$
-
-定义 $\omega = (1-\alpha_1-\beta)\sigma^2$, 我们得到 GARCH (1,2)模型的归一化权重形式:
-
-$$\sigma_t^2 = \omega + \alpha_1 R_{t-1}^2 + \alpha_2 R_{t-2}^2 + \beta \sigma_{t-1}^2$$
-
-2. GARCH (2,1)模型推导
-
-推导过程类似, 我给出最终结果:
-
-(a) 非归一化权重形式:
-$$\begin{cases}
-\alpha_1 = \frac{\tilde{w}_1}{T_{total}}\\
-\alpha_2 = \frac{\tilde{w}_2}{T_{total}(1-\frac{\tilde{w}_1}{T_{total}})}\\
-\beta_1 = \frac{\tilde{w}_1}{T_{total}}\\
-\beta_2 = \frac{\tilde{w}_2}{T_{total}(1-\frac{\tilde{w}_1}{T_{total}})}\\
-\omega = \left(1-\frac{\tilde{w}_1}{T_{total}}-\frac{\tilde{w}_2}{T_{total}(1-\frac{\tilde{w}_1}{T_{total}})}\right)\sigma^2
-\end{cases}$$
-
-(b) 归一化权重形式:  
-$$\begin{cases}
-\alpha_1 = w_1\\  
-\alpha_2 = \frac{w_2}{1-w_1}\\
-\beta_1 = w_1\\
-\beta_2 = \frac{w_2}{1-w_1}\\
-\omega = (1-w_1-\frac{w_2}{1-w_1})\sigma^2
-\end{cases}$$
-
-通过上述具体推导, 我们可以清楚地看到 GARCH 模型参数与权重序列之间的对应关系, 从而建立了加权移动平均模型与 GARCH 模型之间的联系。如有任何错误, 还请不吝赐教。
+以上就是 $\sigma_{t+1}^2$ 的 ARCH、GARCH (1,1)、GARCH (1,2)和 GARCH (2,1)展开式, 结果参数只包含 $\omega$。如有任何错误, 还请不吝赐教。
