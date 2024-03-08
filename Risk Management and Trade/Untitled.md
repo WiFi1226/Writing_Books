@@ -377,3 +377,11 @@ $$\boxed{\begin{aligned}
 \end{aligned}}$$
 
 以上就是 $\sigma_{t+1}^2$ 的 ARCH、GARCH (1,1)、GARCH (1,2)和 GARCH (2,1)展开式, 结果参数只包含 $\omega$。如有任何错误, 还请不吝赐教。
+
+
+
+
+$$\begin{aligned}
+ARCH: \sigma_{t+1}^2=\omega_{c}+\sum_{\tau=0}^{\infty}\alpha_{\tau}R_{t-\tau}^2\\ 
+GARCH_{1,1}: \sigma_{t+1}^2=\omega_{c}+\alpha_{0}R_{t}^2+\beta_{0}\sigma_{{}}
+\end{aligned}$$
