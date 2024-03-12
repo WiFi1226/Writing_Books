@@ -673,6 +673,50 @@ $$
 $$
 
 ---
+GARCH模型和TARCH模型都是用于描述金融时间序列波动率的计量经济学模型,它们之间有一些联系和区别:
+
+1. 相同点:
+    - 两者都是基于ARCH模型的扩展,用于刻画波动率的聚集效应(volatility clustering)。
+    - 都采用了条件方差方程来描述当前波动率与历史信息的关系。
+    - 模型的参数都可以用极大似然估计或其他方法来估计。
+2. 主要区别:
+    - GARCH模型对波动率的反应是对称的,即对正负冲击的反应是一样的。而TARCH引入了"阈值"项,从而可以描述波动率对正负冲击的非对称反应。
+    - TARCH模型的条件方差方程中包含一个额外的阈值项,当残差为负时该项非零,以此捕捉负冲击对波动率的影响更大这一"杠杆效应"。
+    - 因此,TARCH可以看作是GARCH模型的一种扩展,通过非对称项使其更加灵活。
+3. 具体形式:
+    - GARCH(1,1)模型的条件方差方程为: $\sigma_t^2 = \omega + \alpha \varepsilon_{t-1}^2 + \beta \sigma_{t-1}^2$
+    - TARCH(1,1)模型的条件方差方程为: $\sigma_t^2 = \omega + \alpha R_{t-1}^2 + \gamma R_{t-1}^2 d_{t-1} + \beta \sigma_{t-1}^2$ 其中$d_{t-1}$是一个虚拟变量,当$\varepsilon_{t-1}<0$时取1,否则取0。$\gamma$反映了负冲击相比正冲击对波动率影响的非对称性。
+
+总之,TARCH模型通过一个阈值项扩展了GARCH模型,以捕捉金融时间序列中常见的"杠杆效应",是一种更加灵活的波动率建模工具。在具体应用中,需要根据数据特点和研究目的,来选择使用对称的GARCH还是非对称的TARCH模型。
+
+
+非常抱歉,我在之前的回答中把TARCH模型的条件方差方程写错了。下面我将从GARCH模型出发,推导出TARCH模型,并解释其中的杠杆效应。
+
+首先,我们从GARCH(1,1)模型的条件方差方程开始:
+
+$\sigma_t^2 = \omega + \alpha \varepsilon_{t-1}^2 + \beta \sigma_{t-1}^2$
+
+其中$\varepsilon_t$是均值方程的残差。现在我们把$\varepsilon_{t-1}^2$替换为$\varepsilon_{t-1}^2 = \sigma_{t-1}^2 z_{t-1}^2$,其中$z_t$是标准化残差,服从均值为0方差为1的分布。代入可得:
+
+$\sigma_t^2 = \omega + \alpha \sigma_{t-1}^2 z_{t-1}^2 + \beta \sigma_{t-1}^2$
+
+接下来,为了刻画负残差对波动率的非对称影响,我们引入一个虚拟变量$d_{t-1}$,当$\varepsilon_{t-1}<0$时取1,否则取0。同时引入一个新的参数$\gamma$来度量这种非对称性。于是条件方差方程变为:
+
+$\sigma_t^2 = \omega + (\alpha + \gamma d_{t-1}) \sigma_{t-1}^2 z_{t-1}^2 + \beta \sigma_{t-1}^2$
+
+进一步,注意到$z_{t-1} = \varepsilon_{t-1} / \sigma_{t-1}$,代入上式可得:
+
+$\sigma_t^2 = \omega + (\alpha + \gamma d_{t-1}) \frac{\varepsilon_{t-1}^2}{\sigma_{t-1}^2} \sigma_{t-1}^2 + \beta \sigma_{t-1}^2$
+
+化简得到TARCH(1,1)模型的条件方差方程:
+
+$\sigma_t^2 = \omega + \alpha \varepsilon_{t-1}^2 + \gamma \varepsilon_{t-1}^2 d_{t-1} + \beta \sigma_{t-1}^2$
+
+现在我们可以看到,当$\varepsilon_{t-1}<0$即$d_{t-1}=1$时,负残差的系数实际上是$\alpha+\gamma$;而当$\varepsilon_{t-1} \geq 0$即$d_{t-1}=0$时,正残差的系数就是$\alpha$。如果$\gamma>0$,就意味着负残差对波动率的影响大于正残差,这就反映了杠杆效应。
+
+所以,关键就在于引入了虚拟变量$d_{t-1}$和相应的参数$\gamma$,从而让TARCH模型能够捕捉残差正负不同时对波动率的非对称影响,即所谓的杠杆效应。相比之下,GARCH模型中正负残差对波动率的影响是对称的。
+
+---
 
 
 好的,我们来将 $\sum_{\tau=0}^{\infty}F(\lambda,\tau)R_{t-\tau}^{2}$ 展开为GARCH(p,q)的形式。
