@@ -162,10 +162,10 @@ $$
 &\xlongequal{\text{simple weighted average model}}\frac{1}{T_{total}}\sum_{\tau=0}^{T_{total}-1}R_{t-\tau}^{2},\space (s.t.\space \mu_{R_{t+1}}=0,\space\text{Includes current period})\\
 &\xlongequal{\text{ARCH(q)}}Var(\epsilon_{t+1} | \epsilon_{t}, \cdots, \epsilon_{t-q+1}) =  \alpha_0 \epsilon^2_{t} + \cdots + \alpha_q \epsilon^2_{t-q+1}= \sum_{i=0}^{q-1} \alpha_i \epsilon_{t-i}^2\\
 &\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space=\sum_{\tau=0}^{q-1}\alpha_{\tau}R_{t-\tau}^{2}=\sum_{\tau=0}^{q-1}F(\lambda,\tau)R_{t-\tau}^{2},\space(s.t.\space \mu_{R_{t+1}}=0,\space\text{Includes current period})\\
-&\xlongequal{\text{GARCH(1,q)}}Var(\epsilon_{t+1} | \epsilon_{t}, \cdots, \epsilon_{t-q+1}) =  \alpha_0 \epsilon^2_{t} + \cdots + \alpha_q \epsilon^2_{t-q+1}= \sum_{i=0}^{q-1} \alpha_i \epsilon_{t-i}^2\\
-=\sum_{\tau=0}^{T-1}F(\lambda,\tau)R_{t-\tau}^{2}=ARCH(q)+ARCH_{G}(p=1)\\
+&\xlongequal{\text{GARCH(1,q)}}Var(\epsilon_{t+1} | \epsilon_{t}, \cdots, \epsilon_{t-T+1}) =  \alpha_0 \epsilon^2_{t} + \cdots + \alpha_T \epsilon^2_{t-T+1}= \sum_{i=0}^{T-1} \alpha_i \epsilon_{t-i}^2\\
+&\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space=\sum_{\tau=0}^{T-1}F(\lambda,\tau)R_{t-\tau}^{2}=ARCH(q)+ARCH_{G}(p=1)\\
 &\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space=\sum_{\tau=0}^{q-1}F(\lambda,\tau)R_{t-\tau}^{2}+\sum_{\tau=0}^{T-q-1}F(\lambda,\tau+q)\sigma_{t-q+1}^{2}\\
-&\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\xlongequal{\text{GARCH(p,q)}}\sum_{\tau=0}^{q-1}F(\lambda,\tau)R_{t-\tau}^{2}+\sum_{q=1}^{p}\sum_{\tau=0}^{T-q-1}F(\lambda,\tau+q)\sigma_{t-q+1}^{2}\space(space\s.t.\space p+q\leq T)\\
+&\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\xlongequal{\text{GARCH(p,q)}}\sum_{\tau=0}^{q-1}F(\lambda,\tau)R_{t-\tau}^{2}+\sum_{q=1}^{p}\sum_{\tau=0}^{T-q-1}F(\lambda,\tau+q)\sigma_{t-q+1}^{2}\space(s.t.\space p+q\leq T)\\
 &\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space=\sum_{\tau=0}^{q-1}\alpha_{\tau}R_{t-\tau}^{2}+\sum_{q=1}^{p}\beta_{r,q}\sigma_{t-q+1}^{2}\\
 &\xlongequal{\text{TARCH(p,q)}}\sum_{\tau=0}^{T-1}F(\lambda,\tau)R_{t-\tau}^{2}=ARCH(q^+,q^-)+ARCH_{G}(p)\\
 &\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\xlongequal{\text{Embodying leverage}}\sum_{\tau=0}^{q-1}[F(\lambda,\tau)+\gamma d_{\tau}]R_{t-\tau}^{2}+\sum_{q=1}^{p}\sum_{\tau=0}^{T-q-1}F(\lambda,\tau+q)\sigma_{t-q+1}^{2}\space(s.t.\space p+q\leq T)\\
@@ -182,6 +182,7 @@ $$
 		5. When $\lambda = 0.94$, daily variance forecasts can be made without estimation. (The weight of today's squared returns isn $1 - \lambda = 0.06$ and the $\omega_{\sigma^2_{t-100}}$ index decays to $(1 - λ)λ99 = 0.000131$. The $\sum_{0}^{99} \omega$ is 0.998, i.e. it contains 99.8% of the weights. Thus only about 100 daily return lags need to be stored .
 		6. ![[variance_estimate_evolution_correct_time_step.svg]]
 - For CONSTANT values (note the iteration): although the conditional variance responds to new information in the short term, it always tends to return to a constant level in the long term. And because the process is covariance-smooth, the conditional variance is expected to be equal to its unconditional mean, in the long run.
+- ! The absence of CONSTANT is the absence of long-run variance (long-run shocks), So does RiskMetrics model
 $$\begin{aligned}
 s.t.\space &E(\sigma_{t+1}^2) = E(\sigma_t^2) = \sigma^2_{\text{long term stability}}\\
 \\
@@ -270,4 +271,3 @@ $$
 			- => no future information 
 				- => no way to predict future prices
 
-# 
