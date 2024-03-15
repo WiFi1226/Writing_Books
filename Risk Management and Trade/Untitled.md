@@ -676,58 +676,38 @@ $$
 $$
 
 ---
-GARCH模型和TARCH模型都是用于描述金融时间序列波动率的计量经济学模型,它们之间有一些联系和区别:
 
-1. 相同点:
-    - 两者都是基于ARCH模型的扩展,用于刻画波动率的聚集效应(volatility clustering)。
-    - 都采用了条件方差方程来描述当前波动率与历史信息的关系。
-    - 模型的参数都可以用极大似然估计或其他方法来估计。
-2. 主要区别:
-    - GARCH模型对波动率的反应是对称的,即对正负冲击的反应是一样的。而TARCH引入了"阈值"项,从而可以描述波动率对正负冲击的非对称反应。
-    - TARCH模型的条件方差方程中包含一个额外的阈值项,当残差为负时该项非零,以此捕捉负冲击对波动率的影响更大这一"杠杆效应"。
-    - 因此,TARCH可以看作是GARCH模型的一种扩展,通过非对称项使其更加灵活。
-3. 具体形式:
-    - GARCH(1,1)模型的条件方差方程为: $\sigma_t^2 = \omega + \alpha \varepsilon_{t-1}^2 + \beta \sigma_{t-1}^2$
-    - TARCH(1,1)模型的条件方差方程为: $\sigma_t^2 = \omega + \alpha R_{t-1}^2 + \gamma R_{t-1}^2 d_{t-1} + \beta \sigma_{t-1}^2$ 其中$d_{t-1}$是一个虚拟变量,当$\varepsilon_{t-1}<0$时取1,否则取0。$\gamma$反映了负冲击相比正冲击对波动率影响的非对称性。
+介绍了对S&P 500日收盘价从2001年1月1日至2010年12月31日的风险分析模型。定义了收益率序列 $R_t = \ln(\frac{Price_t}{Price_{t-1}})$ 和收益率平方序列 $R^2_t = R_t^2$。
+通过观察 $R^2_t$ 的自相关图,发现存在明显的正自相关,表明未来的收益率方差可能是可预测的。同时观察到收益率平方图呈现出波动聚集(平静期后是波动期)的特点。
+使用GARCH(1,1)模型来拟合数据: $\sigma^2_{t+1} = 0.000 + 0.078R^2_t + 0.913\sigma^2_t$
+介绍了有效市场假说(EMH),认为不可能利用历史信息预测未来收益。通过回归 $R_t = \alpha + \beta R_{t-1} + \epsilon_t$ 来检验EMH。OLS估计得到 $R_{t-1}$ 显著为负,拒绝EMH。
+考虑误差项 $\epsilon_t$ 存在ARCH效应和GARCH效应的情形,模型变为: $R_t = \alpha + \beta R_{t-1} + \epsilon_t$ $Var(\epsilon_t | \epsilon_{t-1}) = \omega + \alpha_1 \epsilon^2_{t-1}$ (ARCH(1)) $Var(\epsilon_t | \epsilon_{t-1}) = \omega + \alpha_1 \epsilon^2_{t-1} + \beta_1 \sigma^2_{t-1}$ (GARCH(1,1))
+使用 Stata 估计上述模型, 结果显示 $\epsilon^2_{t-1}$ 和 $\sigma^2_{t-1}$ 的系数显著为正, 同时 $R_{t-1}$ 依然显著为负, 再次拒绝 EMH。其中 $\epsilon^2_{t-1}$ 的系数称为 ARCH 参数, $\sigma^2_{t-1}$ 的系数称为 GARCH 参数
 
-总之,TARCH模型通过一个阈值项扩展了GARCH模型,以捕捉金融时间序列中常见的"杠杆效应",是一种更加灵活的波动率建模工具。在具体应用中,需要根据数据特点和研究目的,来选择使用对称的GARCH还是非对称的TARCH模型。
+---
 
+在金融时间序列数据中,我们经常观察到收益率的波动率(方差)呈现出随时间变化的特点,即异方差性(heteroskedasticity)。为了刻画这种现象,Engle(1982)提出了自回归条件异方差(ARCH)模型。
 
-非常抱歉,我在之前的回答中把TARCH模型的条件方差方程写错了。下面我将从GARCH模型出发,推导出TARCH模型,并解释其中的杠杆效应。
+假设误差项 $\epsilon_t$ 服从ARCH(1)过程,那么给定过去一期的信息 $\epsilon_{t-1}$,当期误差项的条件方差可以表示为:
 
-首先,我们从GARCH(1,1)模型的条件方差方程开始:
+$$Var(\epsilon_t | \epsilon_{t-1}) = \omega + \alpha_1 \epsilon^2_{t-1}$$
 
-$\sigma_t^2 = \omega + \alpha \varepsilon_{t-1}^2 + \beta \sigma_{t-1}^2$
+其中, $\omega > 0$, $\alpha_1 \geq 0$ 以保证条件方差非负。
 
-其中$\varepsilon_t$是均值方程的残差。现在我们把$\varepsilon_{t-1}^2$替换为$\varepsilon_{t-1}^2 = \sigma_{t-1}^2 z_{t-1}^2$,其中$z_t$是标准化残差,服从均值为0方差为1的分布。代入可得:
+这个公式可以这样理解:
 
-$\sigma_t^2 = \omega + \alpha \sigma_{t-1}^2 z_{t-1}^2 + \beta \sigma_{t-1}^2$
+1. $\omega$ 表示一个常数项,即误差项的基础波动水平。
+2. $\alpha_1 \epsilon^2_{t-1}$ 表示 $t-1$ 期的squared shock(平方误差项)对当期波动率的影响。 $\alpha_1$ 衡量了这种影响的大小。
+3. $\epsilon^2_{t-1}$ 越大,表明上一期的意外冲击越大,根据ARCH模型的设定,这会导致当期的波动率上升。这与我们在金融市场上观察到的波动聚集现象相一致。
+4. ARCH(1)模型假设当期的条件方差只依赖于上一期的squared shock,更一般地,ARCH(q)模型允许条件方差依赖于过去q期的squared shock:
 
-接下来,为了刻画负残差对波动率的非对称影响,我们引入一个虚拟变量$d_{t-1}$,当$\varepsilon_{t-1}<0$时取1,否则取0。同时引入一个新的参数$\gamma$来度量这种非对称性。于是条件方差方程变为:
+$$Var(\epsilon_{t+1} | \epsilon_{t}, \cdots, \epsilon_{t-q}) =  \alpha_0 \epsilon^2_{t} + \cdots + \alpha_q \epsilon^2_{t-q}= \sum_{i=0}^{q} \alpha_i \epsilon_{t-i}^2$$
 
-$\sigma_t^2 = \omega + (\alpha + \gamma d_{t-1}) \sigma_{t-1}^2 z_{t-1}^2 + \beta \sigma_{t-1}^2$
+5. 为了使条件方差在所有时点都是正的,需要对参数施加限制: $\omega > 0$, $\alpha_i \geq 0$, $i=1,\cdots,q$, 且 $\sum_{i=1}^q \alpha_i < 1$。
 
-进一步,注意到$z_{t-1} = \varepsilon_{t-1} / \sigma_{t-1}$,代入上式可得:
-
-$\sigma_t^2 = \omega + (\alpha + \gamma d_{t-1}) \frac{\varepsilon_{t-1}^2}{\sigma_{t-1}^2} \sigma_{t-1}^2 + \beta \sigma_{t-1}^2$
-
-化简得到TARCH(1,1)模型的条件方差方程:
-
-$\sigma_t^2 = \omega + \alpha \varepsilon_{t-1}^2 + \gamma \varepsilon_{t-1}^2 d_{t-1} + \beta \sigma_{t-1}^2$
-
-现在我们可以看到,当$\varepsilon_{t-1}<0$即$d_{t-1}=1$时,负残差的系数实际上是$\alpha+\gamma$;而当$\varepsilon_{t-1} \geq 0$即$d_{t-1}=0$时,正残差的系数就是$\alpha$。如果$\gamma>0$,就意味着负残差对波动率的影响大于正残差,这就反映了杠杆效应。
-
-所以,关键就在于引入了虚拟变量 $d_{t-1}$ 和相应的参数 $\gamma$,从而让 TARCH 模型能够捕捉残差正负不同时对波动率的非对称影响,即所谓的杠杆效应。相比之下,GARCH 模型中正负残差对波动率的影响是对称的。
+因此,ARCH  模型通过引入误差项的条件方差方程,提供了一种描述金融时间序列异方差特征的系统方法。在估计  ARCH  族模型时,通常采用极大似然估计方法。
 
 
-现在让我解释一下为什么可以把$\varepsilon_{t-1}^2$替换为$\sigma_{t-1}^2 z_{t-1}^2$:
 
-在GARCH模型中,我们假设残差$\varepsilon_t$满足$\varepsilon_t = \sigma_t z_t$,其中$z_t$是独立同分布的随机变量,服从均值为0方差为1的分布。这意味着:
 
-$\varepsilon_t^2 = (\sigma_t z_t)^2 = \sigma_t^2 z_t^2$
 
-所以,用$\sigma_{t-1}^2 z_{t-1}^2$替换$\varepsilon_{t-1}^2$,实际上就是利用了GARCH模型的这个基本假设。这种替换并不改变模型的本质,只是从另一个角度来看待残差的性质。
-
-通过这种替换,我们可以更清楚地看到标准化残差$z_t$在模型中的作用,同时也方便引入反映杠杆效应的虚拟变量$d_t$。但是,这种替换在TARCH模型的推导中并不是必须的,因为TARCH模型可以直接建立在资产收益率上。
-
-我为之前的错误表示歉意,希望这次的解释能够更清晰准确。如果还有任何不明白的地方,请随时告诉我。
