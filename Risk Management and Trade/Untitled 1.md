@@ -37,9 +37,31 @@ gen R = ln(close/close[_n-1])
 //获取收益的平方
 gen R2 = R^2
 
+	//如果我们增加了4个滞后，根据此模型，有证据拒绝EMH。
+	reg R l.R l2.R l3.R l4.R
+	//联合检验拒绝了H-null：所有系数联合为零。某些系数具有解释能力
+	test L.R L2.R L3.R L4.R
 
 
+/
+//2. ARCH 
+	//有证据表明ARCH系数显着，这意味着残差的方差随时间变化，它是时间相关的。 
+	arch R l.R l2.R l3.R l4.R, arch(1) 
+	test [ARCH]L1.arch
 
+//3. GARCH 
+	arch R l.R l2.R l3.R l4.R, arch(1) garch(1) 
+	//ARCH和GARCH联合显着
+	test [ARCH] L1.arch L1.garch
+
+	//test [R] L1.R L2.R L3.R L4.R
+	//显著，不能拒绝H-null，即所有回报系数都为零，意味着过去的回报对未来的回报没有预测能力。
+
+//4. T-ARCH模型
+	//此模型用于衡量正面和负面新闻的非对称影响
+	arch R l.R l2.R l3.R l4.R, arch(1) garch(1) tarch(1) 
+	//ARCH，GARCH和TARCH在估计系数的基础上联合显著
+	test [ARCH] L1.arch L1.garch L1.tarch
 
 
 
@@ -95,36 +117,6 @@ corr R2 R
 //如果P值<0.05，则拒绝变量服从正态分布的假设。
 sktest(R)
 
-
-//1. OLS
-	//根据此模型，没有证据反对EMH。查看收益第一滞后的估计系数，该系数不显著。
-	reg R l.R
-	test L.R
-
-	//如果我们增加了4个滞后，根据此模型，有证据拒绝EMH。
-	reg R l.R l2.R l3.R l4.R
-	//联合检验拒绝了H-null：所有系数联合为零。某些系数具有解释能力
-	test L.R L2.R L3.R L4.R
-
-//2. ARCH 
-	//有证据表明ARCH系数显着，这意味着残差的方差随时间变化，它是时间相关的。 
-	arch R l.R l2.R l3.R l4.R, arch(1) 
-	test [ARCH]L1.arch
-
-//3. GARCH 
-	arch R l.R l2.R l3.R l4.R, arch(1) garch(1) 
-	//ARCH和GARCH联合显着
-	test [ARCH] L1.arch L1.garch
-
-	//test [R] L1.R L2.R L3.R L4.R
-	//显著，不能拒绝H-null，即所有回报系数都为零，意味着过去的回报对未来的回报没有预测能力。
-
-//4. T-ARCH模型
-	//此模型用于衡量正面和负面新闻的非对称影响
-	arch R l.R l2.R l3.R l4.R, arch(1) garch(1) tarch(1) 
-	//ARCH，GARCH和TARCH在估计系数的基础上联合显著
-	test [ARCH] L1.arch L1.garch L1.tarch
-
 	//非常重要的是要知道如何写出估计模型：
 	//R_t=0.0134*R_(t-1) -0.0147*R_(t-2)+0.0247*R_(t-3)+0.0331*R-(t-4)+0.0001+e_t
 
@@ -134,6 +126,30 @@ sktest(R)
 
 	//TARCH效应不显著。
 	test [ARCH] L1.tarch
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //第3部分. 模型适配度
 
@@ -198,6 +214,15 @@ sktest(R)
 	test (vtarch==1) (_cons==0)
 	
 //总的来说，GARCH和TARCH是比ARCH更适合我们的数据的模型。
+
+
+
+
+
+
+
+
+
 
 //第4部分. 使用MSE进行模型适配度 
 
