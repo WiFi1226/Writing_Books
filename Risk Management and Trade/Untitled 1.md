@@ -14,16 +14,37 @@ License: MIT
 Copyright: © 2024 FAN WANG. All rights reserved.
 ---
 ```Stata
-//Lecture 1
 
-//打开文件（注意您的.dta文件的位置）
-use "C:\Users\Ariel\OneDrive - University of East Anglia\Teaching\PGT Risk Management and Trading 2022-23\Week 1\SP500.dta", clear 
+//生成日期变量（虽然我们不会用它来设置时间序列）
+gen Date = date(date, "DMY")
+format Date %td
+
+//删除带有空白信息的缺失行 
+drop if missing(close) & missing(Date)
+
+//将数据结构设置为“时间序列数据”，通过为每个观察分配唯一的ID
+gen t = _n 
+tsset t 
+
+//生成收益变量 
 
 //将数据结构设置为“时间序列数据”
 tsset Date 
 
 //生成收益变量 
 gen R = ln(close/close[_n-1])
+
+//获取收益的平方
+gen R2 = R^2
+
+
+
+
+
+
+
+x
+
 
 //图2显示了每日标准普尔500指数收益与滞后1至1500天的收益的相关性。
 ac R, lags(1500)
@@ -44,8 +65,6 @@ sum R, detail
 
 //杠杆效应：当收益上升时，方差有下降的倾向，当收益下降时，方差有上升的倾向。
 
-//获取收益的平方
-gen R2 = R^2
 
 //获取每日标准普尔500指数收益的平方与滞后1至500天的相关性
 ac R2, lags(500)
@@ -64,6 +83,7 @@ ac R2 , lags(252) saving(2, replace)
 	graph combine 1.gph 2.gph, row(2) col(1)
 
 
+
 //收益和平方收益的线图 
 twoway (line R Date, yaxis(1)) (line R2 Date, yaxis(2))
 
@@ -76,36 +96,6 @@ corr R2 R
 sktest(R)
 
 
-//Lecture 4 and 5 （更新版本)
-
-//我们使用与以前讲座相同的SSE数据文件
-//打开文件（注意您的.dta文件的位置）
-use "C:\Users\Ariel\OneDrive - University of East Anglia\Teaching\PGT Risk Management and Trading 2022-23\Week 4\SSE.dta", clear 
-
-//第1部分. 准备数据（清理）
-
-//生成日期变量（虽然我们不会用它来设置时间序列）
-gen Date = date(date, "DMY")
-format Date %td
-
-//删除带有空白信息的缺失行 
-drop if missing(close) & missing(Date)
-
-//将数据结构设置为“时间序列数据”，通过为每个观察分配唯一的ID
-gen t = _n 
-tsset t 
-
-//生成收益变量 
-gen R = ln(close/close[_n-1]) //复利收益率，讲义中的方程（18）
-ac R
-
-gen R2 = R^2 //平方复利收益 
-ac R2
-
-//过去的R2值显示了更大的预测未来值的潜力。
-//R2是方差的构建块，因此方差有效地比收益有更好的预测机会，几乎没有收益之间的自相关
-
-//第2部分. EMH测试
 //1. OLS
 	//根据此模型，没有证据反对EMH。查看收益第一滞后的估计系数，该系数不显著。
 	reg R l.R
@@ -312,16 +302,3 @@ wntestq estarch2, lags(20)
 
 ```
 
-
-```Python
-```
-
-```Java
-```
-
-```Javascript
-```
-
-```Stata
-
-```
