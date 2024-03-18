@@ -249,18 +249,18 @@ $$
 \begin{document} 
 \begin{tikzpicture} 
 \draw (2,2) rectangle (6,3); 
-\node[font=\footnotesize,fill=white] at (4,2.5) {New Public Information};
+\node[font=\footnotesize,fill=none] at (4,2.5) {New Public Information};
 \draw (2,3.5) rectangle (6,4.5); 
-\node[font=\footnotesize,fill=white] at (4,3.5) {Weak Form EMH};
-\node[font=\footnotesize,fill=white] at (4,4) {Past public information};
+\node[font=\footnotesize,fill=none] at (4,3.5) {Weak Form EMH};
+\node[font=\footnotesize,fill=none] at (4,4) {Past public information};
 \draw (7,2) rectangle (11,3); 
-\node[font=\footnotesize,fill=white] at (9,2.5) {New Private Information};
+\node[font=\footnotesize,fill=none] at (9,2.5) {New Private Information};
 \draw (7,3.5) rectangle (11,4.5); 
-\node[font=\footnotesize,fill=white] at (9,4) {Past Private Information};
+\node[font=\footnotesize,fill=none] at (9,4) {Past Private Information};
 \draw (1.5,1.5) rectangle (6.5,5); 
-\node[font=\footnotesize,fill=white] at (4,1.5) {Semi-Strong Form EMH};
+\node[font=\footnotesize,fill=none] at (4,1.5) {Semi-Strong Form EMH};
 \draw (1,1) rectangle (11.5,5.5); 
-\node[font=\footnotesize,fill=white] at (6.25,1) {Strong Form EMH};
+\node[font=\footnotesize,fill=none] at (6.25,1) {Strong Form EMH};
 \end{tikzpicture} 
 \end{document}
 ```
