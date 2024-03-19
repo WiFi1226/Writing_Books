@@ -28,8 +28,7 @@ tsset t
 
 //生成收益变量 
 
-//将数据结构设置为“时间序列数据”
-tsset Date 
+
 
 //生成收益变量 
 gen R = ln(close/close[_n-1])
