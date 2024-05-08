@@ -1,6 +1,3 @@
 ---
 {}
 ---
-
-> [!orange]
->  Data mining software
