@@ -18,5 +18,6 @@ Python 环境构建
 - 系统
 - pyenv（管理版本（基础包），pyenv 被调用时系统原生 python 会被阻止, 因此初次安装后必须显式设定版本）
 	- pyenv global 
-		- venv 
+		- venv 与 deactivate  全局虚拟环境 (额外包)
 	- pyenv local
+		- - venv 与 deactivate  本地虚拟环境 (额外包)
