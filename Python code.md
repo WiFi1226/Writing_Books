@@ -21,3 +21,5 @@ Python 环境构建
 		- venv 与 deactivate  全局虚拟环境 (额外包)
 	- pyenv local
 		- - venv 与 deactivate  本地虚拟环境 (额外包)
+
+os 系统
